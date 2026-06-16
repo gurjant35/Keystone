@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turtle Jack's Etobicoke | Casual Dining & Bar</title>
+<meta name="description" content="Turtle Jack's Etobicoke - Premium casual dining restaurant and bar in Etobicoke, Toronto. Great food, drinks, and atmosphere.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --charcoal: #1a1a1a;
+    --dark: #242424;
+    --card: #2a2a2a;
+    --red: #e63022;
+    --orange: #f07020;
+    --gold: #c9a84c;
+    --white: #ffffff;
+    --light: #f5f0eb;
+    --gray: #999999;
+    --border: #333333;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Montserrat", sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--charcoal); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s;
+  }
+
+  nav.scrolled { background: rgba(10,10,10,0.99); box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 42px; height: 42px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .logo-text {
+    font-family: "Playfair Display", serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .logo-text span { color: var(--red); display: block; font-size: 0.65rem; font-family: "Montserrat", sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-nav {
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+  }
+  .btn-primary:hover { background: #c52518; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(230,48,34,0.4); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--red); color: var(--red); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 70px; left: 0; right: 0;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none;
+    color: var(--white);
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+  }
+  .mobile-menu a:hover, .mobile-menu a.cta { background: var(--red); border-color: var(--red); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(26,26,26,0.6) 50%, rgba(10,10,10,0.9) 100%),
+      url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&q=80") center/cover no-repeat;
+    transform: scale(1.05);
+    animation: heroZoom 8s ease-out forwards;
+  }
+
+  @keyframes heroZoom { to { transform: scale(1); } }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    padding: 100px 24px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(230,48,34,0.15);
+    border: 1px solid rgba(230,48,34,0.4);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.4rem, 8vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+
+  .hero h1 em { color: var(--red); font-style: normal; }
+
+  .hero p {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .btn-large {
+    padding: 16px 30px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-red {
+    background: var(--red);
+    color: var(--white);
+    box-shadow: 0 4px 20px rgba(230,48,34,0.35);
+  }
+  .btn-red:hover { background: #c52518; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(230,48,34,0.5); }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.08);
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--red);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+  .scroll-indicator::after {
+    content: "";
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+  /* SECTION BASE */
+  section { padding: 70px 20px; }
+  .section-header { text-align: center; margin-bottom: 48px; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .section-title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 14px;
+  }
+  .section-sub {
+    font-size: 0.95rem;
+    color: var(--gray);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .divider {
+    width: 50px;
+    height: 3px;
+    background: var(--red);
+    margin: 16px auto 0;
+    border-radius: 2px;
+  }
+
+  /* QUICK INFO BAR */
+  .info-bar {
+    background: var(--charcoal);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 20px;
+  }
+  .info-bar-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+  }
+  .info-icon {
+    width: 32px; height: 32px;
+    background: rgba(230,48,34,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+  .info-item strong { display: block; color: var(--white); font-size: 0.85rem; }
+  .info-item span { color: var(--gray); font-size: 0.75rem; }
+
+  /* FOOD GALLERY */
+  .gallery-section { background: var(--black); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .gallery-item {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 1/1;
+  }
+  .gallery-item:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* MENU SECTION */
+  .menu-section { background: var(--charcoal); }
+  .menu-tabs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .tab-btn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--gray);
+    transition: all 0.25s;
+  }
+  .tab-btn.active, .tab-btn:hover { background: var(--red); border-color: var(--red); color: var(--white); }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  @media(min-width:600px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .menu-card {
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  .menu-card:hover { transform: translateY(-4px); border-color: rgba(230,48,34,0.3); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+  .menu-card-img {
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+  }
+  .menu-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .menu-card:hover .menu-card-img img { transform: scale(1.08); }
+  .menu-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--red);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .menu-card-body { padding: 16px; flex: 1; }
+  .menu-card-name { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .menu-card-desc { font-size: 0.78rem; color: var(--gray); line-height: 1.6; margin-bottom: 10px; }
+  .menu-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .menu-price { color: var(--red); font-size: 1rem; font-weight: 700; }
+  .menu-order-btn {
+    padding: 7px 14px;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .menu-order-btn:hover { background: #c52518; transform: scale(1.04); }
+
+  .menu-cta-row {
+    text-align: center;
+    margin-top: 32px;
+  }
+
+  /* ABOUT SECTION */
+  .about-section { background: var(--black); }
+  .about-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media(min-width:768px) { .about-inner { grid-template-columns: 1fr 1fr; } }
+  .about-img-wrap {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .about-img-wrap img {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    display: block;
+  }
+  .about-img-badge {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: var(--red);
+    color: var(--white);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .about-content h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+  .about-content p {
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid var(--border);
+  }
+  .feature-icon { font-size: 18px; }
+  .feature-text { font-size: 0.78rem; color: var(--light); font-weight: 600; }
+
+  /* REVIEWS */
+  .reviews-section { background: var(--charcoal); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media(min-width:600px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media(min-width:900px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .review-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    position: relative;
+  }
+  .review-card:hover { transform: translateY(-3px); border-color: rgba(230,48,34,0.25); }
+  .review-stars { color: var(--orange); font-size: 0.9rem; margin-bottom: 10px; }
+  .review-text { font-size: 0.83rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 14px; font-style: italic; }
+  .review-author { display: flex; align-items: center; gap: 10px; }
+  .review-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--red);
+  }
+  .review-name { font-size: 0.8rem; font-weight: 700; color: var(--white); }
+  .review-date { font-size: 0.7rem; color: var(--gray); }
+  .review-quote {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-size: 2rem;
+    color: rgba(230,48,34,0.2);
+    font-family: serif;
+    line-height: 1;
+  }
+
+  /* SPECIALS */
+  .specials-section { background: var(--black); }
+  .specials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  @media(min-width:600px) { .specials-grid { grid-template-columns: repeat(2, 1fr); } }
+  .special-card {
+    background: linear-gradient(135deg, var(--card) 0%, var(--dark) 100%);
+    border-radius: 12px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .special-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--red), var(--orange));
+  }
+  .special-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+  .special-day { font-size: 0.7rem; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+  .special-name { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .special-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.6; }
+  .special-emoji { position: absolute; top: 18px; right: 18px; font-size: 1.8rem; opacity: 0.6; }
+
+  /* RESERVATION */
+  .reservation-section {
+    background: linear-gradient(135deg, var(--charcoal) 0%, var(--dark) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .reservation-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=60") center/cover no-repeat;
+    opacity: 0.07;
+  }
+  .reservation-inner {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .reservation-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 32px;
+    text-align: left;
+  }
+  @media(min-width:500px) { .reservation-form { grid-template-columns: 1fr 1fr; } }
+  .form-full { grid-column: 1 / -1; }
+  .form-group label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 13px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 0.88rem;
+    font-family: "Montserrat", sans-serif;
+    transition: border-color 0.25s;
+    outline: none;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--red); background: rgba(230,48,34,0.05); }
+  .form-group select option { background: var(--charcoal); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-submit {
+    grid-column: 1 / -1;
+    padding: 16px;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(230,48,34,0.35);
+  }
+  .form-submit:hover { background: #c52518; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(230,48,34,0.5); }
+
+  /* CONTACT */
+  .contact-section { background: var(--black); }
+  .contact-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  @media(min-width:768px) { .contact-inner { grid-template-columns: 1fr 1fr; } }
+  .contact-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 24px;
+    border: 1px solid var(--border);
+  }
+  .contact-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .contact-icon {
+    width: 38px; height: 38px;
+    background: rgba(230,48,34,0.12);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .contact-row strong { display: block; font-size: 0.78rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+  .contact-row a, .contact-row span { color: var(--white); font-size: 0.9rem; text-decoration: none; }
+  .contact-row a:hover { color: var(--red); }
+
+  .hours-table { width: 100%; border-collapse: collapse; }
+  .hours-table tr { border-bottom: 1px solid var(--border); }
+  .hours-table tr:last-child { border-bottom: none; }
+  .hours-table td { padding: 10px 0; font-size: 0.85rem; color: var(--gray); }
+  .hours-table td:last-child { text-align: right; color: var(--white); }
+  .hours-table .today { color: var(--red) !important; font-weight: 700; }
+
+  .social-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .social-btn {
+    width: 40px; height: 40px;
+    background: var(--dark);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--gray);
+    font-size: 16px;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+  }
+  .social-btn:hover { background: var(--red); border-color: var(--red); color: var(--white); }
+
+  /* MAP */
+  .map-wrap {
+    height: 240px;
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+  }
+  .map-placeholder {
+    text-align: center;
+    color: var(--gray);
+  }
+  .map-placeholder .map-icon { font-size: 2.5rem; margin-bottom: 8px; }
+  .map-placeholder p { font-size: 0.82rem; margin-bottom: 12px; }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--red) 0%, #c52518 50%, #a01e12 100%);
+    padding: 50px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=40") center/cover no-repeat;
+    opacity: 0.1;
+  }
+  .cta-banner-inner { position: relative; }
+  .cta-banner h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .cta-banner p { color: rgba(255,255,255,0.85); font-size: 0.95rem; margin-bottom: 24px; }
+  .cta-banner-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-white {
+    padding: 14px 28px;
+    background: var(--white);
+    color: var(--red);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-white:hover { background: var(--light); transform: translateY(-2px); }
+  .btn-white-outline {
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--white);
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-white-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    border-top: 1px solid var(--border);
+    padding: 40px 20px 20px;
+  }
+  .footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-logo .logo-text { font-size: 1rem; }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--red); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-copy { font-size: 0.75rem; color: var(--gray); }
+  .footer-phone a { color: var(--red); text-decoration: none; font-size: 0.85rem; font-weight: 700; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--red);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    z-index: 9999;
+    transition: transform 0.4s ease;
+    box-shadow: 0 8px 30px rgba(230,48,34,0.5);
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* FLOATING CALL BTN */
+  .float-call {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 4px 20px rgba(230,48,34,0.5);
+    z-index: 800;
+    animation: pulse 2.5s infinite;
+    transition: transform 0.2s;
+  }
+  .float-call:hover { transform: scale(1.1); }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(230,48,34,0.5); }
+    50% { box-shadow: 0 4px 30px rgba(230,48,34,0.8), 0 0 0 8px rgba(230,48,34,0.15); }
+  }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .nav-actions .btn-outline { display: none; }
+    .hamburger { display: flex; }
+    .nav-actions .btn-primary { display: none; }
+    .hero-stats { gap: 20px; }
+  }
+  @media(min-width:601px) { .hamburger { display: none; } .mobile-menu { display: none !important; } }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* MENU TABS CONTENT */
+  .menu-content { display: none; }
+  .menu-content.active { display: grid; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">🐢</div>
+    <div class="logo-text">
+      Turtle Jack's
+      <span>Etobicoke</span>
+    </div>
+  </a>
+  <div class="nav-actions">
+    <a href="tel:4162131111" class="btn-nav btn-outline">📞 Call</a>
+    <a href="#reservation" class="btn-nav btn-primary">Reserve Now</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#gallery">🍽️ Food Gallery</a>
+  <a href="#menu">📋 Menu</a>
+  <a href="#reviews">⭐ Reviews</a>
+  <a href="#contact">📍 Location</a>
+  <a href="tel:4162131111">📞 416-213-1111</a>
+  <a href="#reservation" class="cta">🗓️ Reserve a Table</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>📍</span> Etobicoke, Toronto
+    </div>
+    <h1>Where Every Bite <em>Tells a Story</em></h1>
+    <p>Casual dining elevated. Bold flavours, relaxed atmosphere, and cold drinks waiting for you in the heart of Etobicoke.</p>
+    <div class="hero-cta">
+      <a href="#reservation" class="btn-large btn-red">🗓️ Reserve a Table</a>
+      <a href="#menu" class="btn-large btn-ghost">View Menu</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">4.5★</span>
+        <span class="stat-label">Google Rating</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Happy Reviews</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">20+</span>
+        <span class="stat-label">Years Serving</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">Scroll</div>
+</section>
+
+<!-- INFO BAR -->
+<div class="info-bar">
+  <div class="info-bar-inner">
+    <div class="info-item">
+      <div class="info-icon">📞</div>
+      <div>
+        <strong><a href="tel:4162131111" style="color:white;text-decoration:none;">416-213-1111</a></strong>
+        <span>Call to Order</span>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">📍</div>
+      <div>
+        <strong>Etobicoke, Toronto ON</strong>
+        <span>Casual Dining & Bar</span>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">🕐</div>
+      <div>
+        <strong id="open-status">Open Today</strong>
+        <span>Daily Hours Vary</span>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">🌐</div>
+      <div>
+        <strong><a href="https://www.turtlejacks.com/" target="_blank" style="color:white;text-decoration:none;">turtlejacks.com</a></strong>
+        <span>Full Menu Online</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOD GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-header fade-up">
+    <span class="section-label">Food & Ambiance</span>
+    <h2 class="section-title">Taste It Visually</h2>
+    <p class="section-sub">Fresh ingredients, bold flavours, cozy atmosphere — all waiting for you.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item fade-up">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80" alt="Restaurant interior ambiance" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Warm & Welcoming Atmosphere</span></div>
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Gourmet burger" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Signature Burgers</span></div>
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80" alt="Stack of pancakes" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Brunch Favourites</span></div>
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80" alt="Fresh salad bowl" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Fresh & Healthy</span></div>
+    </div>
+    <div class="gallery-item fade-up">
+      <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=600&q=80" alt="Craft cocktails" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Craft Cocktails & Drinks</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU SECTION -->
+<section class="menu-section" id="menu">
+  <div class="section-header fade-up">
+    <span class="section-label">Our Menu</span>
+    <h2 class="section-title">Bold Flavours, Every Visit</h2>
+    <p class="section-sub">Handcrafted dishes made with the freshest local ingredients. Something for everyone.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="showTab('mains')">Mains</button>
+    <button class="tab-btn" onclick="showTab('starters')">Starters</button>
+    <button class="tab-btn" onclick="showTab('drinks')">Drinks</button>
+    <button class="tab-btn" onclick="showTab('desserts')">Desserts</button>
+  </div>
+
+  <div id="mains" class="menu-content menu-grid active">
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Classic Burger" loading="lazy">
+        <span class="menu-badge">⭐ Fan Fave</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">TJ Classic Burger</div>
+        <div class="menu-card-desc">Premium beef patty, aged cheddar, house sauce, fresh toppings on a brioche bun.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$18</span>
+          <button class="menu-order-btn" onclick="orderItem('TJ Classic Burger')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=400&q=80" alt="BBQ Ribs" loading="lazy">
+        <span class="menu-badge">🔥 Hot Pick</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Slow-Smoked BBQ Ribs</div>
+        <div class="menu-card-desc">Fall-off-the-bone ribs glazed in our signature BBQ sauce, with coleslaw and fries.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$32</span>
+          <button class="menu-order-btn" onclick="orderItem('Slow-Smoked BBQ Ribs')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80" alt="Fish and Chips" loading="lazy">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Beer-Battered Fish & Chips</div>
+        <div class="menu-card-desc">Atlantic cod in crispy beer batter, hand-cut fries, tartar sauce & lemon.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$22</span>
+          <button class="menu-order-btn" onclick="orderItem('Beer-Battered Fish and Chips')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&q=80" alt="Grilled Chicken" loading="lazy">
+        <span class="menu-badge">🥗 Healthy</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Grilled Chicken Bowl</div>
+        <div class="menu-card-desc">Herb-marinated grilled chicken, seasonal veggies, grains and citrus vinaigrette.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$20</span>
+          <button class="menu-order-btn" onclick="orderItem('Grilled Chicken Bowl')">Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="starters" class="menu-content menu-grid">
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&q=80" alt="Nachos" loading="lazy">
+        <span class="menu-badge">🍕 Share</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Loaded Nachos</div>
+        <div class="menu-card-desc">Crispy tortilla chips, melted cheese, jalapeños, sour cream, guacamole and salsa.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$16</span>
+          <button class="menu-order-btn" onclick="orderItem('Loaded Nachos')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80" alt="Chicken Wings" loading="lazy">
+        <span class="menu-badge">🔥 Spicy</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">TJ Wings</div>
+        <div class="menu-card-desc">1 lb crispy wings in your choice of sauce — buffalo, honey garlic, BBQ or dry rub.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$17</span>
+          <button class="menu-order-btn" onclick="orderItem('TJ Wings')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=400&q=80" alt="Calamari" loading="lazy">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Crispy Calamari</div>
+        <div class="menu-card-desc">Lightly breaded calamari rings with chipotle aioli and fresh lemon.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$15</span>
+          <button class="menu-order-btn" onclick="orderItem('Crispy Calamari')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1625944525533-473f1a3d54e7?w=400&q=80" alt="Soup" loading="lazy">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">French Onion Soup</div>
+        <div class="menu-card-desc">Rich caramelized onion broth topped with crusty croutons and melted Gruyère.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$11</span>
+          <button class="menu-order-btn" onclick="orderItem('French Onion Soup')">Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="drinks" class="menu-content menu-grid">
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&q=80" alt="Craft Beer" loading="lazy">
+        <span class="menu-badge">🍺 Draft</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Local Craft Beers</div>
+        <div class="menu-card-desc">Rotating selection of Ontario craft beers on tap. Ask your server for today's picks.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">From $8</span>
+          <button class="menu-order-btn" onclick="orderItem('Craft Beer')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&q=80" alt="Cocktail" loading="lazy">
+        <span class="menu-badge">🍹 Signature</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">TJ Signature Cocktails</div>
+        <div class="menu-card-desc">House-crafted cocktails — margaritas, mojitos, old fashioneds and seasonal specials.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">From $13</span>
+          <button class="menu-order-btn" onclick="orderItem('Signature Cocktail')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&q=80" alt="Wine" loading="lazy">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Wine Selection</div>
+        <div class="menu-card-desc">Curated reds, whites, and rosés by the glass or bottle to complement your meal.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">From $10</span>
+          <button class="menu-order-btn" onclick="orderItem('Wine')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&q=80" alt="Mocktails" loading="lazy">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Fresh Mocktails</div>
+        <div class="menu-card-desc">Alcohol-free house blends — fruit spritzers, virgin mojitos and more.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">From $7</span>
+          <button class="menu-order-btn" onclick="orderItem('Mocktail')">Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="desserts" class="menu-content menu-grid">
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&q=80" alt="Chocolate Cake" loading="lazy">
+        <span class="menu-badge">🍫 Indulge</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">Molten Lava Cake</div>
+        <div class="menu-card-desc">Warm chocolate cake with a gooey center, vanilla ice cream and caramel drizzle.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$10</span>
+          <button class="menu-order-btn" onclick="orderItem('Molten Lava Cake')">Order</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card fade-up">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1567171466295-4afa63d45416?w=400&q=80" alt="Cheesecake" loading="lazy">
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">NY Style Cheesecake</div>
+        <div class="menu-card-desc">Classic New York cheesecake with fresh berry compote and whipped cream.</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">$9</span>
+          <button class="menu-order-btn" onclick="orderItem('NY Style Cheesecake')">Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-cta-row">
+    <a href="https://www.turtlejacks.com/" target="_blank" class="btn-large btn-red">View Full Menu Online →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap fade-up">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80" alt="Turtle Jack's restaurant dining room" loading="lazy">
+      <div class="about-img-badge">🏆 Etobicoke Favourite</div>
+    </div>
+    <div class="about-content fade-up">
+      <span class="section-label">Our Story</span>
+      <h2>More Than a Meal — It's an Experience</h2>
+      <p>Turtle Jack's has been a cornerstone of casual dining in Ontario for over two decades. In Etobicoke, we bring that same warm, lively spirit to every table — whether you're gathering with family, catching a game with friends, or celebrating a special occasion.</p>
+      <p>Our kitchen is built on bold flavours, fresh ingredients, and recipes that make people come back again and again. Pair that with a full bar, attentive service, and a room that feels like home, and you have Turtle Jack's.</p>
+      <div class="about-features">
+        <div class="feature-item">
+          <span class="feature-icon">🍺</span>
+          <span class="feature-text">Full Bar & Craft Beer</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📺</span>
+          <span class="feature-text">Live Sports Screens</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">👨‍👩‍👧</span>
+          <span class="feature-text">Family Friendly</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🎉</span>
+          <span class="feature-text">Private Events</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🚗</span>
+          <span class="feature-text">Ample Parking</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">♿</span>
+          <span class="feature-text">Accessible</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="section-header fade-up">
+    <span class="section-label">What Guests Say</span>
+    <h2 class="section-title">Real Reviews, Real People</h2>
+    <p class="section-sub">Our guests keep coming back. Here is what they have to say about their Turtle Jack's experience.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-up">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Best wings in Etobicoke — hands down. The atmosphere is great for watching the game and the staff always makes you feel welcome. We come here almost every weekend!"</p>
+      <div class="review-author">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T" class="review-avatar" loading="lazy">
+        <div>
+          <div class="review-name">Michael T.</div>
+          <div class="review-date">Google Review · 2 weeks ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Absolutely love this place! The BBQ ribs are incredible and the molten lava cake for dessert is a must. Our server was so attentive and friendly. Will be back soon!"</p>
+      <div class="review-author">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah K" class="review-avatar" loading="lazy">
+        <div>
+          <div class="review-name">Sarah K.</div>
+          <div class="review-date">Google Review · 1 month ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text">"Great family spot! Kids loved the nachos and we all enjoyed the cocktails. The space is big enough to feel lively but still comfortable. Perfect for a Friday night out."</p>
+      <div class="review-author">
+        <img src="https://randomuser.me/api/portraits/men/58.jpg" alt="James W" class="review-avatar" loading="lazy">
+        <div>
+          <div class="review-name">James W.</div>
+          <div class="review-date">Google Review · 3 weeks ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"We hosted a birthday dinner here and it was perfect. The staff went above and beyond. The food came out fast and everything tasted amazing. Cannot recommend enough!"</p>
+      <div class="review-author">
+        <img src="https://randomuser.me/api/portraits/women/21.jpg" alt="Priya M" class="review-avatar" loading="lazy">
+        <div>
+          <div class="review-name">Priya M.</div>
+          <div class="review-date">Google Review · 1 week ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"The craft beer selection is amazing and rotates regularly. Paired with the fish and chips — perfection. The patio is great in summer too. A go-to spot for us."</p>
+      <div class="review-author">
+        <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="David R" class="review-avatar" loading="lazy">
+        <div>
+          <div class="review-name">David R.</div>
+          <div class="review-date">Google Review · 2 months ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-up">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Came here on a whim and I am so glad we did. The burger was juicy and flavourful, fries were crispy. Great vibes, great food, great service. Now it is our regular spot!"</p>
+      <div class="review-author">
+        <img src="https://randomuser.me/api/portraits/women/67.jpg" alt="Amanda C" class="review-avatar" loading="lazy">
+        <div>
+          <div class="review-name">Amanda C.</div>
+          <div class="review-date">Google Review · 3 days ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALS -->
+<section class="specials-section" id="specials">
+  <div class="section-header fade-up">
+    <span class="section-label">Weekly Specials</span>
+    <h2 class="section-title">Something to Look Forward To</h2>
+    <p class="section-sub">Every day has its deal. Come in and save while enjoying your favourites.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="specials-grid">
+    <div class="special-card fade-up">
+      <div class="special-emoji">🍺</div>
+      <div class="special-day">Monday — Wing Night</div>
+      <div class="special-name">Wings & Beer Combo</div>
+      <div class="special-desc">1 lb wings + draft beer — all night long. Choose your sauce and enjoy the deal.</div>
+    </div>
+    <div class="special-card fade-up">
+      <div class="special-emoji">🌮</div>
+      <div class="special-day">Tuesday — Taco Tuesday</div>
+      <div class="special-name">Taco Night Special</div>
+      <div class="special-desc">3 tacos for a great price with your choice of filling. Limited time offer every week.</div>
+    </div>
+    <div class="special-card fade-up">
+      <div class="special-emoji">🍸</div>
+      <div class="special-day">Wednesday — Ladies Night</div>
+      <div class="special-name">Half Price Cocktails</div>
+      <div class="special-desc">Ladies enjoy half-priced signature cocktails all evening. Gather the crew and celebrate.</div>
+    </div>
+    <div class="special-card fade-up">
+      <div class="special-emoji">🏈</div>
+      <div class="special-day">Weekend — Game Day</div>
+      <div class="special-name">Pitchers & Platters</div>
+      <div class="special-desc">Beer pitchers and shareable platters available all day while sports plays on our big screens.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section class="reservation-section" id="reservation">
+  <div class="reservation-inner">
+    <div class="section-header fade-up">
+      <span class="section-label">Book a Table</span>
+      <h2 class="section-title">Reserve Your Spot</h2>
+      <p class="section-sub">Secure your table in minutes. We look forward to seeing you!</p>
+      <div class="divider"></div>
+    </div>
+    <form class="reservation-form" id="reservationForm" onsubmit="submitReservation(event)">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="416-xxx-xxxx" required>
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="resDate" required>
+      </div>
+      <div class="form-group">
+        <label>Time</label>
+        <select required>
+          <option value="">Select a time</option>
+          <option>11:30 AM</option>
+          <option>12:00 PM</option>
+          <option>12:30 PM</option>
+          <option>1:00 PM</option>
+          <option>5:00 PM</option>
+          <option>5:30 PM</option>
+          <option>6:00 PM</option>
+          <option>6:30 PM</option>
+          <option>7:00 PM</option>
+          <option>7:30 PM</option>
+          <option>8:00 PM</option>
+          <option>8:30 PM</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Party Size</label>
+        <select required>
+          <option value="">Number of guests</option>
+          <option>1 Guest</option>
+          <option>2 Guests</option>
+          <option>3 Guests</option>
+          <option>4 Guests</option>
+          <option>5 Guests</option>
+          <option>6 Guests</option>
+          <option>7-10 Guests</option>
+          <option>10+ Guests (Group)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Occasion</label>
+        <select>
+          <option value="">Select occasion (optional)</option>
+          <option>Birthday</option>
+          <option>Anniversary</option>
+          <option>Business Dinner</option>
+          <option>Date Night</option>
+          <option>Family Gathering</option>
+          <option>Just Dinner</option>
+        </select>
+      </div>
+      <div class="form-group form-full">
+        <label>Special Requests</label>
+        <textarea placeholder="Dietary requirements, seating preferences, allergies..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">🗓️ Confirm Reservation</button>
+    </form>
+    <p style="text-align:center;margin-top:16px;font-size:0.8rem;color:var(--gray);">Or call us directly at <a href="tel:4162131111" style="color:var(--red);font-weight:700;">416-213-1111</a></p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-header fade-up">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Come Visit Us</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="contact-inner">
+    <div class="contact-card fade-up">
+      <h3>📋 Contact & Info</h3>
+      <div class="contact-row">
+        <div class="contact-icon">📞</div>
+        <div>
+          <strong>Phone</strong>
+          <a href="tel:4162131111">416-213-1111</a>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📍</div>
+        <div>
+          <strong>Location</strong>
+          <span>Etobicoke, Toronto, Ontario</span>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">🌐</div>
+        <div>
+          <strong>Website</strong>
+          <a href="https://www.turtlejacks.com/" target="_blank">www.turtlejacks.com</a>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">🍽️</div>
+        <div>
+          <strong>Type</strong>
+          <span>Casual Dining Restaurant & Bar</span>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="https://www.turtlejacks.com/" target="_blank" class="social-btn" aria-label="Website">🌐</a>
+        <a href="tel:4162131111" class="social-btn" aria-label="Call">📞</a>
+        <a href="#reservation" class="social-btn" aria-label="Reserve">🗓️</a>
+        <a href="https://www.turtlejacks.com/" target="_blank" class="social-btn" aria-label="Menu">📋</a>
+      </div>
+    </div>
+    <div class="contact-card fade-up">
+      <h3>🕐 Hours of Operation</h3>
+      <table class="hours-table">
+        <tr>
+          <td id="day-mon">Monday</td>
+          <td id="hrs-mon">11:30 AM – 11:00 PM</td>
+        </tr>
+        <tr>
+          <td id="day-tue">Tuesday</td>
+          <td id="hrs-tue">11:30 AM – 11:00 PM</td>
+        </tr>
+        <tr>
+          <td id="day-wed">Wednesday</td>
+          <td id="hrs-wed">11:30 AM – 11:00 PM</td>
+        </tr>
+        <tr>
+          <td id="day-thu">Thursday</td>
+          <td id="hrs-thu">11:30 AM – 12:00 AM</td>
+        </tr>
+        <tr>
+          <td id="day-fri">Friday</td>
+          <td id="hrs-fri">11:30 AM – 1:00 AM</td>
+        </tr>
+        <tr>
+          <td id="day-sat">Saturday</td>
+          <td id="hrs-sat">11:00 AM – 1:00 AM</td>
+        </tr>
+        <tr>
+          <td id="day-sun">Sunday</td>
+          <td id="hrs-sun">11:00 AM – 10:00 PM</td>
+        </tr>
+      </table>
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:12px;">* Hours may vary on holidays. Call to confirm.</p>
+    </div>
+  </div>
+  <div style="max-width:900px;margin:24px auto 0;">
+    <div class="map-wrap fade-up" onclick="openMap()">
+      <div class="map-placeholder">
+        <div class="map-icon">📍</div>
+        <p>Turtle Jack's Etobicoke<br>Etobicoke, Toronto, Ontario</p>
+        <a class="btn-large btn-red" style="margin:0 auto;" onclick="openMap()">Get Directions →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div class="cta-banner-inner">
+    <h2>Ready for an Unforgettable Meal?</h2>
+    <p>Join us at Turtle Jack's Etobicoke tonight. Great food, cold drinks, and warm hospitality await.</p>
+    <div class="cta-banner-btns">
+      <a href="#reservation" class="btn-white">🗓️ Book a Table</a>
+      <a href="tel:4162131111" class="btn-white-outline">📞 Call 416-213-1111</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="#" class="nav-logo footer-logo" style="text-decoration:none;">
+        <div class="logo-icon">🐢</div>
+        <div class="logo-text">
+          Turtle Jack's
+          <span>Etobicoke · Toronto</span>
+        </div>
+      </a>
+      <div class="footer-links">
+        <a href="#gallery">Gallery</a>
+        <a href="#menu">Menu</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#specials">Specials</a>
+        <a href="#reservation">Reserve</a>
+        <a href="#contact">Contact</a>
+        <a href="https://www.turtlejacks.com/" target="_blank">Website</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Turtle Jack's Etobicoke. All rights reserved. | Etobicoke, Toronto, Ontario</p>
+      <div class="footer-phone"><a href="tel:4162131111">📞 416-213-1111</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CALL BUTTON -->
+<a href="tel:4162131111" class="float-call" aria-label="Call Turtle Jack's">📞</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // NAVBAR SCROLL
+  const navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", function() {
+    if (window.scrollY > 50) { navbar.classList.add("scrolled"); }
+    else { navbar.classList.remove("scrolled"); }
+  });
+
+  // HAMBURGER
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+  hamburger.addEventListener("click", function() {
+    mobileMenu.classList.toggle("open");
+  });
+  mobileMenu.querySelectorAll("a").forEach(function(link) {
+    link.addEventListener("click", function() { mobileMenu.classList.remove("open"); });
+  });
+
+  // MENU TABS
+  function showTab(tabId) {
+    document.querySelectorAll(".menu-content").forEach(function(el) {
+      el.classList.remove("active");
+      el.style.display = "none";
+    });
+    document.querySelectorAll(".tab-btn").forEach(function(btn) {
+      btn.classList.remove("active");
+    });
+    var target = document.getElementById(tabId);
+    if (target) {
+      target.classList.add("active");
+      target.style.display = "grid";
+    }
+    event.target.classList.add("active");
+  }
+  // Init menu display
+  document.querySelectorAll(".menu-content").forEach(function(el) {
+    if (!el.classList.contains("active")) { el.style.display = "none"; }
+  });
+
+  // TOAST NOTIFICATION
+  function showToast(msg) {
+    var toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(function() { toast.classList.remove("show"); }, 3500);
+  }
+
+  // ORDER ITEM
+  function orderItem(name) {
+    showToast("✅ " + name + " added! Call us to complete your order.");
+    setTimeout(function() {
+      if (confirm("Would you like to call us to complete your order?")) {
+        window.location.href = "tel:4162131111";
+      }
+    }, 1000);
+  }
+
+  // RESERVATION FORM
+  function submitReservation(e) {
+    e.preventDefault();
+    showToast("🎉 Reservation request sent! We will confirm shortly.");
+    e.target.reset();
+  }
+
+  // MAP
+  function openMap() {
+    window.open("https://www.google.com/maps/search/Turtle+Jack%27s+Etobicoke+Toronto+Ontario", "_blank");
+  }
+
+  // SET MIN DATE FOR RESERVATION
+  var dateInput = document.getElementById("resDate");
+  if (dateInput) {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0");
+    var yyyy = today.getFullYear();
+    dateInput.min = yyyy + "-" + mm + "-" + dd;
+  }
+
+  // HIGHLIGHT TODAY IN HOURS TABLE
+  var days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  var dayIndex = new Date().getDay();
+  var todayKey = days[dayIndex];
+  var dayEl = document.getElementById("day-" + todayKey);
+  var hrsEl = document.getElementById("hrs-" + todayKey);
+  if (dayEl) dayEl.classList.add("today");
+  if (hrsEl) hrsEl.classList.add("today");
+
+  // OPEN STATUS
+  var openStatus = document.getElementById("open-status");
+  var hour = new Date().getHours();
+  if (hour >= 11 && hour < 23) {
+    openStatus.textContent = "Open Now";
+    openStatus.style.color = "#4caf50";
+  } else {
+    openStatus.textContent = "Opens at 11:30 AM";
+    openStatus.style.color = "#ff9800";
+  }
+
+  // SCROLL ANIMATIONS
+  var fadeEls = document.querySelectorAll(".fade-up");
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(function(el) { observer.observe(el); });
+
+  // SMOOTH ANCHOR SCROLL
+  document.querySelectorAll("a[href^='#']").forEach(function(anchor) {
+    anchor.addEventListener("click", function(e) {
+      var target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        e.preventDefault();
+        var offset = 75;
+        var pos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: pos, behavior: "smooth" });
+      }
+    });
+  });
+</script>
+</body>
+</html>
