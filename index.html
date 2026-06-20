@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Keystone Home Products Ltd — Frameless shower doors, mirror walls, and aluminum systems for GTA homeowners, contractors, and builders. Serving Toronto, Brampton, and Mississauga since 1994." />
+<title>Keystone Home Products Ltd — Crafted in Glass. Built for Life.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   KEYSTONE HOME PRODUCTS — fluid.glass-inspired premium build
+   Palette: #ffffff / #1a1a1a / #c9a84c / #f5f5f5
+   Fonts:   Cormorant Garamond (headings) + Inter (body / nav)
+   ============================================================ */
+
+:root {
+  --white:   #ffffff;
+  --charcoal:#1a1a1a;
+  --gold:    #c9a84c;
+  --grey:    #f5f5f5;
+  --grey-line:#e5e5e5;
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --container: 1440px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-sans);
+  color: var(--charcoal);
+  background: var(--white);
+  line-height: 1.65;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* ---------- typography ---------- */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--charcoal);
+}
+.serif { font-family: var(--font-serif); }
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--gold);
+}
+
+/* ---------- layout helpers ---------- */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 40px; }
+.section { padding: 100px 0; }
+.section-grey { background: var(--grey); }
+.section-white { background: var(--white); }
+.section-dark { background: var(--charcoal); color: var(--white); }
+.section-dark h1, .section-dark h2, .section-dark h3 { color: var(--white); }
+
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+  .section { padding: 70px 0; }
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 22px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s var(--ease), padding 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  background: transparent;
+}
+.navbar.scrolled {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(26,26,26,0.08), 0 8px 24px rgba(0,0,0,0.04);
+  padding: 16px 40px;
+}
+/* When navbar is transparent AND hero is dark (home/about/products/projects/contact), text is white */
+.navbar:not(.scrolled).on-dark .nav-link,
+.navbar:not(.scrolled).on-dark .brand-text { color: #fff; }
+.navbar:not(.scrolled).on-dark .brand-K { color: var(--gold); }
+.navbar:not(.scrolled).on-dark .hamburger span { background: #fff; }
+.navbar:not(.scrolled).on-light .nav-link,
+.navbar:not(.scrolled).on-light .brand-text { color: var(--charcoal); }
+.navbar:not(.scrolled).on-light .brand-K { color: var(--gold); }
+.navbar:not(.scrolled).on-light .hamburger span { background: var(--charcoal); }
+.navbar.scrolled .nav-link,
+.navbar.scrolled .brand-text { color: var(--charcoal); }
+.navbar.scrolled .brand-K { color: var(--gold); }
+.navbar.scrolled .hamburger span { background: var(--charcoal); }
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  user-select: none;
+}
+.brand-K { color: var(--gold); font-weight: 600; }
+.brand-text { color: var(--charcoal); transition: color 0.3s var(--ease); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 44px;
+  list-style: none;
+}
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--charcoal);
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.3s var(--ease);
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s var(--ease);
+}
+.nav-link:hover { color: var(--gold); }
+.nav-link:hover::after { width: 100%; }
+.nav-link.active { color: var(--gold); }
+.nav-link.active::after { width: 100%; }
+
+.hamburger {
+  display: none;
+  width: 32px; height: 22px;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 110;
+}
+.hamburger span {
+  display: block;
+  width: 100%; height: 1.5px;
+  background: var(--charcoal);
+  transition: transform 0.35s var(--ease), opacity 0.3s var(--ease);
+}
+.hamburger.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+/* mobile fullscreen overlay */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 105;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-menu a {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--charcoal);
+  position: relative;
+}
+.mobile-menu a::after {
+  content:""; display:block; width:0; height:1px;
+  background: var(--gold); margin: 6px auto 0;
+  transition: width 0.3s var(--ease);
+}
+.mobile-menu a:hover { color: var(--gold); }
+.mobile-menu a:hover::after { width: 60px; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .navbar, .navbar.scrolled { padding: 18px 24px; }
+}
+
+/* ============================================================
+   PAGE SWITCHING (SPA-style)
+   ============================================================ */
+.page { display: none; }
+.page.active { display: block; }
+.page.active.fade-page {
+  animation: fadePageIn 0.6s var(--ease) both;
+}
+@keyframes fadePageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   HERO (Home — full viewport with image + Ken Burns zoom)
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: var(--charcoal);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  animation: kenburns 18s ease-out infinite alternate;
+  will-change: transform;
+}
+@keyframes kenburns {
+  0%   { transform: scale(1.05) translate3d(0,0,0); }
+  100% { transform: scale(1.18) translate3d(-1.5%, -1.5%, 0); }
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26,26,26,0.55) 0%, rgba(26,26,26,0.65) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 920px;
+  padding: 0 24px;
+}
+.hero h1 {
+  font-size: clamp(42px, 7vw, 84px);
+  color: #fff;
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.hero-sub {
+  margin-top: 24px;
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: rgba(255,255,255,0.82);
+  font-weight: 300;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+.hero-cta {
+  display: inline-block;
+  margin-top: 44px;
+  padding: 16px 42px;
+  background: var(--gold);
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  border: 1px solid var(--gold);
+}
+.hero-cta:hover {
+  background: #b8963f;
+  border-color: #b8963f;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(201,168,76,0.25);
+}
+.scroll-hint {
+  position: absolute;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 22px; height: 36px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 12px;
+}
+.scroll-hint::after {
+  content: "";
+  position: absolute;
+  top: 7px; left: 50%;
+  transform: translateX(-50%);
+  width: 2px; height: 6px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 1px;
+  animation: scrollDot 1.6s var(--ease) infinite;
+}
+@keyframes scrollDot {
+  0%   { opacity: 0; transform: translate(-50%, 0); }
+  40%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, 12px); }
+}
+
+/* ---------- inner page hero (About, Products, Projects, Contact) ---------- */
+.inner-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: var(--charcoal);
+}
+.inner-hero.products-hero { min-height: 50vh; }
+.inner-hero.projects-hero { min-height: 50vh; }
+.inner-hero.contact-hero { min-height: 50vh; }
+.inner-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.inner-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,26,26,0.6);
+}
+.inner-hero h1 {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(40px, 6vw, 72px);
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   MARQUEE STRIP
+   ============================================================ */
+.marquee {
+  background: #fff;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  overflow: hidden;
+  padding: 14px 0;
+}
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 38s linear infinite;
+  will-change: transform;
+}
+.marquee-track span {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--charcoal);
+  padding: 0 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+}
+.marquee-track span::after {
+  content: "◆";
+  color: var(--gold);
+  font-size: 8px;
+  margin-left: 28px;
+}
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   INTRO / VALUES / STATS / SECTIONS
+   ============================================================ */
+.intro {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.intro h2 {
+  font-size: clamp(34px, 4.5vw, 52px);
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+.intro p {
+  font-size: 17px;
+  color: #555;
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px;
+}
+.value-col {
+  position: relative;
+  padding-top: 32px;
+}
+.value-col::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 56px; height: 1px;
+  background: var(--gold);
+}
+.value-col h3 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 18px;
+}
+.value-col p {
+  font-size: 15px;
+  color: #555;
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+@media (max-width: 900px) {
+  .values-grid { grid-template-columns: 1fr; gap: 36px; }
+}
+
+/* stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  text-align: center;
+}
+.stat .stat-num {
+  font-family: var(--font-serif);
+  font-size: clamp(48px, 6vw, 64px);
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat .stat-label {
+  margin-top: 14px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #555;
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ============================================================
+   FEATURED PRODUCTS GRID
+   ============================================================ */
+.section-head {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.section-head h2 {
+  font-size: clamp(34px, 4.5vw, 52px);
+  font-weight: 300;
+}
+.section-head .eyebrow {
+  display: block;
+  margin-bottom: 18px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+.product-card {
+  background: #fff;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.product-card .card-img {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--grey);
+}
+.product-card .card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.product-card:hover { transform: translateY(-6px); }
+.product-card:hover .card-img img { transform: scale(1.06); }
+.product-card h3 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-top: 22px;
+}
+.product-card .card-desc {
+  font-size: 14px;
+  color: #666;
+  font-weight: 300;
+  margin-top: 10px;
+  line-height: 1.7;
+}
+.product-card .card-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+}
+.product-card .card-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: var(--gold);
+  transform: scaleX(0.4);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.product-card .card-link:hover::after { transform: scaleX(1); }
+
+@media (max-width: 1024px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+}
+@media (max-width: 600px) {
+  .products-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.testimonial {
+  background: #fff;
+  padding: 48px 36px 40px;
+  border: 1px solid var(--grey-line);
+  position: relative;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.testimonial:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(26,26,26,0.06);
+}
+.testimonial .quote-mark {
+  font-family: var(--font-serif);
+  font-size: 80px;
+  line-height: 0.5;
+  color: var(--gold);
+  height: 30px;
+  margin-bottom: 12px;
+}
+.testimonial blockquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--charcoal);
+  font-weight: 400;
+  margin-bottom: 22px;
+}
+.testimonial .reviewer {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .testimonials-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   CTA BANNER
+   ============================================================ */
+.cta-banner {
+  background: var(--charcoal);
+  color: #fff;
+  padding: 100px 24px;
+  text-align: center;
+}
+.cta-banner h2 {
+  color: #fff;
+  font-size: clamp(34px, 4.5vw, 48px);
+  font-weight: 300;
+  margin-bottom: 36px;
+}
+.cta-outline-btn {
+  display: inline-block;
+  padding: 15px 40px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.cta-outline-btn:hover {
+  background: var(--gold);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   ABOUT — two column
+   ============================================================ */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.two-col .col-text h2 {
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 300;
+  margin-bottom: 28px;
+  line-height: 1.2;
+}
+.two-col .col-text p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.9;
+  font-weight: 300;
+}
+.two-col .col-img {
+  height: 560px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--grey);
+}
+.two-col .col-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 900px) {
+  .two-col { grid-template-columns: 1fr; gap: 40px; }
+  .two-col .col-img { height: 380px; }
+}
+
+/* ============================================================
+   PROJECTS GALLERY + LIGHTBOX
+   ============================================================ */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.gallery-item {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--grey);
+}
+.gallery-item .gallery-img {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+.gallery-item .gallery-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+.gallery-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+.gallery-item:hover .gallery-img img { transform: scale(1.06); }
+.gallery-item:hover::after { opacity: 0.18; }
+.gallery-item .gallery-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--charcoal);
+  padding: 18px 4px 4px;
+  font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+
+/* lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,15,15,0.92);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+.lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lightbox-img {
+  max-width: 88vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border: 1px solid rgba(201,168,76,0.25);
+}
+.lightbox-close {
+  position: absolute;
+  top: 28px; right: 32px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.1); color: var(--gold); }
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+}
+.lightbox-arrow:hover { background: rgba(201,168,76,0.4); color: #fff; }
+.lightbox-prev { left: 28px; }
+.lightbox-next { right: 28px; }
+.lightbox-caption {
+  position: absolute;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 400;
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: start;
+}
+.contact-info .eyebrow {
+  display: block;
+  margin-bottom: 8px;
+}
+.contact-info .info-block {
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--grey-line);
+}
+.contact-info .info-block:last-child { border-bottom: none; }
+.contact-info .info-value {
+  font-size: 16px;
+  color: var(--charcoal);
+  line-height: 1.6;
+  font-weight: 400;
+}
+.contact-info .info-value a:hover { color: var(--gold); }
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.form-field {
+  position: relative;
+}
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--grey-line);
+  background: transparent;
+  padding: 18px 0 12px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  resize: vertical;
+}
+.form-field textarea { min-height: 130px; }
+.form-field input:focus,
+.form-field textarea:focus {
+  border-bottom-color: var(--gold);
+  background: rgba(245,245,245,0.5);
+}
+.form-field label {
+  position: absolute;
+  left: 0;
+  top: 18px;
+  font-size: 14px;
+  color: #888;
+  font-weight: 300;
+  pointer-events: none;
+  transition: transform 0.3s var(--ease), color 0.3s var(--ease), font-size 0.3s var(--ease);
+}
+.form-field input:focus + label,
+.form-field input:not(:placeholder-shown) + label,
+.form-field textarea:focus + label,
+.form-field textarea:not(:placeholder-shown) + label {
+  transform: translateY(-20px);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+}
+.form-submit {
+  margin-top: 12px;
+  padding: 17px;
+  background: var(--gold);
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.form-submit:hover {
+  background: #b8963f;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(201,168,76,0.28);
+}
+.form-success {
+  display: none;
+  margin-top: 16px;
+  padding: 16px 22px;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid var(--gold);
+  color: var(--charcoal);
+  font-size: 14px;
+}
+.form-success.show { display: block; }
+
+.map-embed {
+  width: 100%;
+  height: 450px;
+  border: none;
+  filter: grayscale(40%) contrast(1.05);
+  transition: filter 0.3s var(--ease);
+}
+.map-embed:hover { filter: grayscale(0%) contrast(1); }
+
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background: var(--charcoal);
+  color: #fff;
+  padding: 60px 40px 30px;
+}
+.footer-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+}
+.footer-brand {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+}
+.footer-brand .brand-K { color: var(--gold); font-weight: 600; }
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  list-style: none;
+}
+.footer-nav a {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.85);
+  font-weight: 400;
+  transition: color 0.3s var(--ease);
+}
+.footer-nav a:hover { color: var(--gold); }
+
+.footer-contact {
+  text-align: right;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+}
+.footer-contact a:hover { color: var(--gold); }
+.footer-bottom {
+  max-width: var(--container);
+  margin: 48px auto 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--gold);
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 900px) {
+  .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 28px; }
+  .footer-nav { flex-wrap: wrap; }
+  .footer-contact { text-align: center; }
+}
+
+/* ============================================================
+   SCROLL ANIMATIONS — IntersectionObserver fade-up
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 120ms; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 240ms; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 360ms; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 480ms; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 600ms; }
+.reveal-stagger.visible > *:nth-child(7) { transition-delay: 720ms; }
+.reveal-stagger.visible > *:nth-child(8) { transition-delay: 840ms; }
+.reveal-stagger.visible > *:nth-child(9) { transition-delay: 960ms; }
+.reveal-stagger.visible > *:nth-child(10){ transition-delay: 1080ms; }
+.reveal-stagger.visible > *:nth-child(11){ transition-delay: 1200ms; }
+.reveal-stagger.visible > *:nth-child(12){ transition-delay: 1320ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .hero-bg, .marquee-track { animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- =================== NAVBAR =================== -->
+<nav class="navbar on-dark" id="navbar">
+  <div class="brand" data-nav="home">
+    <span class="brand-K">K</span><span class="brand-text">eystone Home Products</span>
+  </div>
+  <ul class="nav-links">
+    <li><a class="nav-link" data-nav="home">Home</a></li>
+    <li><a class="nav-link" data-nav="about">About</a></li>
+    <li><a class="nav-link" data-nav="products">Products</a></li>
+    <li><a class="nav-link" data-nav="projects">Projects</a></li>
+    <li><a class="nav-link" data-nav="contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- =================== MOBILE MENU =================== -->
+<div class="mobile-menu" id="mobileMenu">
+  <a data-nav="home">Home</a>
+  <a data-nav="about">About</a>
+  <a data-nav="products">Products</a>
+  <a data-nav="projects">Projects</a>
+  <a data-nav="contact">Contact</a>
+</div>
+
+<!-- ============================================================
+     PAGE: HOME
+     ============================================================ -->
+<main id="page-home" class="page active fade-page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" style="background-image:url('https://sfile.chatglm.cn/images-ppt/dcedff8c9d17.jpg');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Crafted in Glass.<br />Built for Life.</h1>
+      <p class="hero-sub">Frameless shower doors, mirror walls, and aluminum systems for GTA homeowners, contractors, and builders.</p>
+      <a class="hero-cta" data-nav="contact">Get a Free Quote</a>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"></div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Frameless Shower Doors</span>
+      <span>Mirror Walls</span>
+      <span>Closet Systems</span>
+      <span>Aluminum Dividers</span>
+      <span>GTA Wide Installation</span>
+      <span>Since 1994</span>
+      <span>Brampton Ontario</span>
+      <span>Frameless Shower Doors</span>
+      <span>Mirror Walls</span>
+      <span>Closet Systems</span>
+      <span>Aluminum Dividers</span>
+      <span>GTA Wide Installation</span>
+      <span>Since 1994</span>
+      <span>Brampton Ontario</span>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="section section-white">
+    <div class="container">
+      <div class="intro reveal">
+        <h2>Where Precision Meets Beauty</h2>
+        <p>Keystone Home Products has been transforming homes across Toronto, Brampton, and Mississauga since 1994. We design and install bespoke glass and aluminum systems for every space, every budget, and every vision.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="section section-grey">
+    <div class="container">
+      <div class="values-grid reveal-stagger">
+        <div class="value-col">
+          <h3>Precision Installation</h3>
+          <p>Every measurement matters. Our installations are carried out by experienced technicians who treat your home with care and exactness.</p>
+        </div>
+        <div class="value-col">
+          <h3>Premium Materials</h3>
+          <p>We source only high quality glass and aluminum products that meet the demands of modern Canadian homes.</p>
+        </div>
+        <div class="value-col">
+          <h3>30+ Years of Experience</h3>
+          <p>Since 1994, GTA homeowners, contractors, and builders have trusted Keystone to deliver on time and on budget.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="section section-white">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Selected Work</span>
+        <h2>Our Products</h2>
+      </div>
+      <div class="products-grid reveal-stagger">
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/8b9aba91ec15.jpg" alt="Frameless Shower Doors" loading="lazy" /></div>
+          <h3>Frameless Shower Doors</h3>
+          <p class="card-desc">Custom-fitted glass enclosures with no visible frames.</p>
+          <a class="card-link" data-nav="products">View Product →</a>
+        </div>
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/24e739ebd913.jpg" alt="Mirror Walls" loading="lazy" /></div>
+          <h3>Mirror Walls</h3>
+          <p class="card-desc">Floor-to-ceiling mirror systems that open any space.</p>
+          <a class="card-link" data-nav="products">View Product →</a>
+        </div>
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/5468d6ddebd9.jpg" alt="Sliding Closet Doors" loading="lazy" /></div>
+          <h3>Sliding Closet Doors</h3>
+          <p class="card-desc">Glass or mirror panel doors that replace bulky swings.</p>
+          <a class="card-link" data-nav="products">View Product →</a>
+        </div>
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/dc58501bc6f5.jpg" alt="Aluminum Dividers" loading="lazy" /></div>
+          <h3>Aluminum Dividers</h3>
+          <p class="card-desc">Precision-engineered track systems for clean separation.</p>
+          <a class="card-link" data-nav="products">View Product →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section section-grey">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Client Voices</span>
+        <h2>What Our Clients Say</h2>
+      </div>
+      <div class="testimonials-grid reveal-stagger">
+        <div class="testimonial">
+          <div class="quote-mark">&ldquo;</div>
+          <blockquote>Fatima helped me with my order of sliding doors for three closets at my condo. She was so quick to respond and had an installation appointment two days later. The installers were professional and quick. I will definitely recommend Keystone.</blockquote>
+          <div class="reviewer">Verified GTA Customer</div>
+        </div>
+        <div class="testimonial">
+          <div class="quote-mark">&ldquo;</div>
+          <blockquote>I called for a new shower door and they were able to do it the next day. Installers did a great job and left the job perfectly clean.</blockquote>
+          <div class="reviewer">Verified Homeowner — Brampton</div>
+        </div>
+        <div class="testimonial">
+          <div class="quote-mark">&ldquo;</div>
+          <blockquote>Keystone was knowledgeable and knew exactly the concerns I had with my space. I got exactly what I needed at a price cheaper than big box stores.</blockquote>
+          <div class="reviewer">Verified Contractor — Toronto</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner reveal">
+    <h2>Ready to Transform Your Space?</h2>
+    <a class="cta-outline-btn" data-nav="contact">Contact Us Today</a>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: ABOUT
+     ============================================================ -->
+<main id="page-about" class="page fade-page">
+
+  <section class="inner-hero">
+    <div class="inner-hero-bg" style="background-image:url('https://sfile.chatglm.cn/images-ppt/1d6682ddf43e.jpg');"></div>
+    <div class="inner-hero-overlay"></div>
+    <h1>Our Story</h1>
+  </section>
+
+  <section class="section section-white">
+    <div class="container">
+      <div class="two-col">
+        <div class="col-text reveal">
+          <span class="eyebrow">Since 1994</span>
+          <h2 style="margin-top:14px;">Built on Experience.<br />Driven by Craft.</h2>
+          <p>Keystone Home Products was founded in 1994 with a simple philosophy: do whatever the job requires to get it done right. For over thirty years we have worked alongside homeowners, contractors, and builders across the GTA to deliver glass and aluminum solutions that meet every schedule, every specification, and every vision.</p>
+          <p style="margin-top:18px;">We understand the challenges of home building because we have lived them. That understanding is what makes us different — and why our clients return to us project after project, generation after generation.</p>
+        </div>
+        <div class="col-img reveal">
+          <img src="https://sfile.chatglm.cn/images-ppt/4ba073ec9f2b.jpg" alt="Glass showroom interior" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-grey">
+    <div class="container">
+      <div class="stats-grid reveal-stagger">
+        <div class="stat">
+          <div class="stat-num">30+</div>
+          <div class="stat-label">In Business</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Thousands</div>
+          <div class="stat-label">Installations Completed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">GTA Wide</div>
+          <div class="stat-label">Service Area</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner reveal">
+    <h2>Ready to Transform Your Space?</h2>
+    <a class="cta-outline-btn" data-nav="contact">Contact Us Today</a>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: PRODUCTS
+     ============================================================ -->
+<main id="page-products" class="page fade-page">
+
+  <section class="inner-hero products-hero">
+    <div class="inner-hero-bg" style="background-image:url('https://sfile.chatglm.cn/images-ppt/9c91d68a1075.jpg');"></div>
+    <div class="inner-hero-overlay"></div>
+    <h1>Our Products</h1>
+  </section>
+
+  <section class="section section-white">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Catalogue</span>
+        <h2>Glass &amp; Aluminum Systems</h2>
+      </div>
+      <div class="products-grid reveal-stagger" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/7cd8085e6ac0.jpg" alt="Frameless Shower Doors" loading="lazy" /></div>
+          <h3>Frameless Shower Doors</h3>
+          <p class="card-desc">Clean, minimal glass enclosures custom fitted to your bathroom with no visible frames. The signature modern statement.</p>
+          <a class="card-link" data-nav="contact">Learn More →</a>
+        </div>
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/2d1b390866d1.jpg" alt="Framed Shower Doors" loading="lazy" /></div>
+          <h3>Framed Shower Doors</h3>
+          <p class="card-desc">Durable framed glass systems that combine affordability with a clean, modern finish suited to any bathroom.</p>
+          <a class="card-link" data-nav="contact">Learn More →</a>
+        </div>
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/4f935fc07b44.jpg" alt="Mirror Walls and Sliding Mirror Doors" loading="lazy" /></div>
+          <h3>Mirror Walls &amp; Sliding Mirror Doors</h3>
+          <p class="card-desc">Floor-to-ceiling mirror systems that open up any space and enhance natural light throughout the room.</p>
+          <a class="card-link" data-nav="contact">Learn More →</a>
+        </div>
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/a0d1e02271c7.jpg" alt="Aluminum Sliding Dividers" loading="lazy" /></div>
+          <h3>Aluminum Sliding Dividers</h3>
+          <p class="card-desc">Precision-engineered aluminum track systems for separating spaces cleanly and beautifully without permanent walls.</p>
+          <a class="card-link" data-nav="contact">Learn More →</a>
+        </div>
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/a574546c69ca.jpg" alt="Panel Closet Doors" loading="lazy" /></div>
+          <h3>Panel Closet Doors</h3>
+          <p class="card-desc">Sliding panel doors in glass or mirror finish that replace bulky traditional swinging doors and reclaim floor space.</p>
+          <a class="card-link" data-nav="contact">Learn More →</a>
+        </div>
+        <div class="product-card">
+          <div class="card-img"><img src="https://sfile.chatglm.cn/images-ppt/6af6904039da.jpg" alt="Closet Organizers and Shelving" loading="lazy" /></div>
+          <h3>Closet Organizers &amp; Shelving</h3>
+          <p class="card-desc">Custom wood and wire shelving systems designed to maximize every inch of your storage space, tailored to you.</p>
+          <a class="card-link" data-nav="contact">Learn More →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner reveal">
+    <h2>Ready to Transform Your Space?</h2>
+    <a class="cta-outline-btn" data-nav="contact">Contact Us Today</a>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: PROJECTS
+     ============================================================ -->
+<main id="page-projects" class="page fade-page">
+
+  <section class="inner-hero projects-hero">
+    <div class="inner-hero-bg" style="background-image:url('https://sfile.chatglm.cn/images-ppt/68d6ba4bd04e.png');"></div>
+    <div class="inner-hero-overlay"></div>
+    <h1>Our Work</h1>
+  </section>
+
+  <section class="section section-white">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Selected Projects</span>
+        <h2>Recent Installations</h2>
+      </div>
+      <div class="gallery-grid reveal-stagger" id="galleryGrid">
+        <!-- 12 items injected by JS for clean lightbox wiring -->
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner reveal">
+    <h2>Ready to Transform Your Space?</h2>
+    <a class="cta-outline-btn" data-nav="contact">Contact Us Today</a>
+  </section>
+</main>
+
+<!-- ============================================================
+     PAGE: CONTACT
+     ============================================================ -->
+<main id="page-contact" class="page fade-page">
+
+  <section class="inner-hero contact-hero">
+    <div class="inner-hero-bg" style="background-image:url('https://sfile.chatglm.cn/images-ppt/c0946d4a20ae.jpg');"></div>
+    <div class="inner-hero-overlay"></div>
+    <h1>Get in Touch</h1>
+  </section>
+
+  <section class="section section-white">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="info-block">
+            <span class="eyebrow">Address</span>
+            <div class="info-value">1730 Steeles Ave East, Unit 4 to 7<br />Brampton, ON L6T 1A4</div>
+          </div>
+          <div class="info-block">
+            <span class="eyebrow">Phone</span>
+            <div class="info-value"><a href="tel:9057900997">905 790 0997</a></div>
+          </div>
+          <div class="info-block">
+            <span class="eyebrow">Email</span>
+            <div class="info-value"><a href="mailto:info@keystonehomeproducts.com">info@keystonehomeproducts.com</a></div>
+          </div>
+          <div class="info-block">
+            <span class="eyebrow">Business Hours</span>
+            <div class="info-value">Monday to Friday<br />8:00 AM – 5:00 PM</div>
+          </div>
+        </div>
+
+        <div class="contact-form reveal">
+          <form id="contactForm" novalidate>
+            <div class="form-field">
+              <input type="text" id="f-name" name="name" placeholder=" " required />
+              <label for="f-name">Full Name</label>
+            </div>
+            <div class="form-field">
+              <input type="tel" id="f-phone" name="phone" placeholder=" " required />
+              <label for="f-phone">Phone Number</label>
+            </div>
+            <div class="form-field">
+              <input type="email" id="f-email" name="email" placeholder=" " required />
+              <label for="f-email">Email Address</label>
+            </div>
+            <div class="form-field">
+              <textarea id="f-message" name="message" placeholder=" " required></textarea>
+              <label for="f-message">Message</label>
+            </div>
+            <button type="submit" class="form-submit">Send Message</button>
+            <div class="form-success" id="formSuccess">Thank you — your message has been received. We'll be in touch within one business day.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-grey" style="padding:0;">
+    <iframe
+      class="map-embed"
+      src="https://www.google.com/maps?q=1730+Steeles+Ave+E,+Brampton,+ON+L6T+1A4&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Keystone Home Products location map"></iframe>
+  </section>
+</main>
+
+<!-- ============================================================
+     FOOTER (shared across all pages)
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-K">K</span>eystone Home Products
+    </div>
+    <ul class="footer-nav">
+      <li><a data-nav="home">Home</a></li>
+      <li><a data-nav="about">About</a></li>
+      <li><a data-nav="products">Products</a></li>
+      <li><a data-nav="projects">Projects</a></li>
+      <li><a data-nav="contact">Contact</a></li>
+    </ul>
+    <div class="footer-contact">
+      1730 Steeles Ave East, Unit 4–7<br />Brampton, ON L6T 1A4<br />
+      <a href="tel:9057900997">905 790 0997</a> &nbsp;·&nbsp;
+      <a href="mailto:info@keystonehomeproducts.com">info@keystonehomeproducts.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    Copyright 2026 Keystone Home Products Ltd. All rights reserved.
+  </div>
+</footer>
+
+<!-- =================== LIGHTBOX =================== -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lightbox-arrow lightbox-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <button class="lightbox-arrow lightbox-next" id="lbNext" aria-label="Next">&#8250;</button>
+  <img class="lightbox-img" id="lbImg" src="" alt="" />
+  <div class="lightbox-caption" id="lbCaption"></div>
+</div>
+
+<script>
+/* ============================================================
+   KEYSTONE — single-file SPA logic
+   ============================================================ */
+(function () {
+  'use strict';
+
+  /* -------- 1. Page routing (hash-based SPA) -------- */
+  const pages = ['home', 'about', 'products', 'projects', 'contact'];
+  const navbar = document.getElementById('navbar');
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  function setNavbarTheme(page) {
+    // Pages whose top section is dark get white nav text on transparent navbar
+    navbar.classList.remove('on-dark', 'on-light');
+    navbar.classList.add('on-dark');
+  }
+
+  function navigate(page, push) {
+    if (!pages.includes(page)) page = 'home';
+    pages.forEach(p => {
+      const el = document.getElementById('page-' + p);
+      if (p === page) {
+        el.classList.add('active');
+        // restart fade animation
+        el.classList.remove('fade-page');
+        void el.offsetWidth;
+        el.classList.add('fade-page');
+      } else {
+        el.classList.remove('active');
+      }
+    });
+    document.querySelectorAll('[data-nav]').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('data-nav') === page);
+    });
+    setNavbarTheme(page);
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    // Recompute scroll state at top
+    navbar.classList.remove('scrolled');
+    // Re-run reveal observer for newly visible elements
+    requestAnimationFrame(() => observeAll());
+    if (push !== false) {
+      history.pushState({ page }, '', '#' + page);
+    }
+    document.title = page === 'home'
+      ? 'Keystone Home Products Ltd — Crafted in Glass. Built for Life.'
+      : 'Keystone Home Products — ' + page.charAt(0).toUpperCase() + page.slice(1);
+  }
+
+  // Wire up every data-nav click
+  document.body.addEventListener('click', function (e) {
+    const link = e.target.closest('[data-nav]');
+    if (!link) return;
+    const page = link.getAttribute('data-nav');
+    if (page) {
+      e.preventDefault();
+      closeMobileMenu();
+      navigate(page);
+    }
+  });
+
+  // Initial route from hash
+  window.addEventListener('popstate', function () {
+    const page = (location.hash || '#home').slice(1);
+    navigate(page, false);
+  });
+  const initialPage = (location.hash || '#home').slice(1);
+  navigate(initialPage, false);
+
+  /* -------- 2. Navbar scroll state -------- */
+  function onScroll() {
+    if (window.scrollY > 30) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* -------- 3. Mobile menu -------- */
+  function openMobileMenu() {
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  hamburger.addEventListener('click', function () {
+    if (hamburger.classList.contains('open')) closeMobileMenu();
+    else openMobileMenu();
+  });
+
+  /* -------- 4. IntersectionObserver fade-up -------- */
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  function observeAll() {
+    document.querySelectorAll('.reveal:not(.visible), .reveal-stagger:not(.visible)').forEach(el => {
+      // Only observe elements inside the currently active page
+      const parentPage = el.closest('.page');
+      if (!parentPage || parentPage.classList.contains('active')) {
+        io.observe(el);
+      }
+    });
+  }
+  // initial pass
+  observeAll();
+
+  /* -------- 5. Projects gallery (12 items) + lightbox -------- */
+  const projects = [
+    { img: 'https://sfile.chatglm.cn/images-ppt/ad8a79ec6e21.webp', name: 'Brampton Frameless Shower' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/cb7aec4a8442.jpg',         name: 'Mississauga Mirror Wall' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/a9fd79cc89ec.jpg',         name: 'Toronto Closet Renovation' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/4acc0adb9016.jpeg',        name: 'Modern Bathroom Renovation' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/24c3b5306fb0.jpg',         name: 'Aluminum Glass Interior' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/f6b409df6a34.jpg',         name: 'Luxury Shower Enclosure' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/94c905c2a922.jpg',         name: 'Sliding Mirror Door' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/dcee59d429a6.jpg',         name: 'Glass Wall Partition' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/05a7ef59d0b1.jpg',         name: 'Walk-in Closet Organizer' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/3dc53c683797.jpg',         name: 'Frameless Glass Bathroom' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/c0946d4a20ae.jpg',         name: 'Modern Glass Extension' },
+    { img: 'https://sfile.chatglm.cn/images-ppt/05b5ccbba799.jpg',         name: 'Luxury Bathroom Interior' }
+  ];
+  const galleryGrid = document.getElementById('galleryGrid');
+  projects.forEach((p, i) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.setAttribute('data-index', i);
+    item.innerHTML =
+      '<div class="gallery-img"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy" /></div>' +
+      '<div class="gallery-label">' + p.name + '</div>';
+    item.addEventListener('click', () => openLightbox(i));
+    galleryGrid.appendChild(item);
+  });
+
+  /* -------- 6. Lightbox -------- */
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCaption = document.getElementById('lbCaption');
+  const lbClose = document.getElementById('lbClose');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  let currentLb = 0;
+
+  function openLightbox(i) {
+    currentLb = i;
+    lbImg.src = projects[i].img;
+    lbImg.alt = projects[i].name;
+    lbCaption.textContent = (i + 1) + ' / ' + projects.length + '  ·  ' + projects[i].name;
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function navLightbox(dir) {
+    currentLb = (currentLb + dir + projects.length) % projects.length;
+    openLightbox(currentLb);
+  }
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', () => navLightbox(-1));
+  lbNext.addEventListener('click', () => navLightbox(1));
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') navLightbox(-1);
+    else if (e.key === 'ArrowRight') navLightbox(1);
+  });
+
+  /* -------- 7. Contact form (front-end only) -------- */
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const phone = form.phone.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+    if (!name || !phone || !email || !message) {
+      success.classList.remove('show');
+      success.style.background = 'rgba(201,168,76,0.08)';
+      success.style.borderColor = '#c9a84c';
+      success.textContent = 'Please fill in all fields before sending.';
+      success.classList.add('show');
+      return;
+    }
+    // Basic email check
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      success.textContent = 'Please enter a valid email address.';
+      success.classList.add('show');
+      return;
+    }
+    success.textContent = 'Thank you, ' + name + ' — your message has been received. We\u2019ll be in touch within one business day.';
+    success.classList.add('show');
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>
