@@ -4,18 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Toronto Premium Glass | Crafted in Light</title>
-<meta name="description" content="Custom shower enclosures, glass railings, vanity mirrors and office partitions across the GTA. Trade-level craftsmanship, luxury finish.">
 
+<!-- GSAP + ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Lenis Smooth Scroll -->
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
+<!-- Splitting.js for letter animation -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/splitting/dist/splitting.css">
 <script src="https://cdn.jsdelivr.net/npm/splitting/dist/splitting.min.js"></script>
+
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 
 <style>
+/* ============================================================
+   DESIGN TOKENS
+   Palette: near-black obsidian, warm bone white, 
+            ice-blue glass accent, burnished chrome
+   Type: Cormorant Garamond (display) + Inter (body)
+   Signature: full-page glass refraction panels that catch
+              light as you scroll — chrome lines that feel like
+              light bending through real glass
+   ============================================================ */
+
 :root {
   --obsidian:   #080A0C;
   --obsidian-2: #0E1215;
@@ -27,13 +43,15 @@
   --chrome:     #D0D8E0;
   --chrome-dim: #6A7A88;
   --gold:       #B8A882;
+
   --font-display: 'Cormorant Garamond', serif;
   --font-body:    'Inter', sans-serif;
   --font-stamp:   'Bebas Neue', sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: auto; }
+
+html { scroll-behavior: auto; } /* Lenis handles this */
 
 body {
   background: var(--obsidian);
@@ -41,23 +59,10 @@ body {
   font-family: var(--font-body);
   font-weight: 300;
   overflow-x: hidden;
-  cursor: none;
+  cursor: default;
 }
 
-/* Grain texture overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9500;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 300px 300px;
-}
-
-/* ── CURSOR ─────────────────────────── */
+/* ── CURSOR ─────────────────────────────────────────────── */
 .cursor {
   position: fixed;
   width: 8px; height: 8px;
@@ -66,36 +71,36 @@ body::after {
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: width 0.3s, height 0.3s, opacity 0.3s;
+  transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
   mix-blend-mode: screen;
 }
 .cursor-ring {
   position: fixed;
   width: 36px; height: 36px;
-  border: 1px solid rgba(168,200,216,0.5);
+  border: 1px solid rgba(168, 200, 216, 0.5);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s, border-color 0.3s;
+  transition: transform 0.12s ease-out, width 0.4s, height 0.4s;
 }
 
-/* ── NAV ─────────────────────────────── */
+/* ── NAV ─────────────────────────────────────────────────── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 1000;
+  z-index: 100;
   padding: 28px 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: transform 0.4s ease;
+  mix-blend-mode: normal;
 }
 nav::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(8,10,12,0.92) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(8,10,12,0.9) 0%, transparent 100%);
   pointer-events: none;
 }
 .nav-logo {
@@ -109,7 +114,9 @@ nav::before {
   z-index: 1;
   text-decoration: none;
 }
-.nav-logo span { color: var(--ice); }
+.nav-logo span {
+  color: var(--ice);
+}
 .nav-links {
   display: flex;
   gap: 40px;
@@ -127,8 +134,7 @@ nav::before {
   text-decoration: none;
   transition: color 0.3s;
 }
-.nav-links a:hover,
-.nav-links a.active { color: var(--ice-bright); }
+.nav-links a:hover { color: var(--bone); }
 .nav-cta {
   position: relative;
   z-index: 1;
@@ -147,7 +153,10 @@ nav::before {
 }
 .nav-cta:hover { background: var(--bone); }
 
-/* ── HERO ─────────────────────────────── */
+/* ── SECTION BASE ────────────────────────────────────────── */
+section { position: relative; }
+
+/* ── HERO ────────────────────────────────────────────────── */
 .hero {
   height: 100vh;
   display: flex;
@@ -160,44 +169,58 @@ nav::before {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(8,10,12,0.82) 40%, rgba(168,200,216,0.04) 100%);
-  z-index: 2;
+  background: 
+    /* Glass gradient overlay */
+    linear-gradient(135deg, rgba(8,10,12,0.85) 40%, rgba(168,200,216,0.04) 100%),
+    /* Fallback color if image not loaded */
+    var(--obsidian-2);
+  z-index: 1;
 }
-.hero-video {
+.hero-bg-img {
   position: absolute;
   inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center;
-  filter: brightness(0.5) saturate(0.7);
-  z-index: 1;
-  transform: scale(1.04);
+  object-position: center right;
+  filter: brightness(0.6) saturate(0.7);
+  z-index: 0;
+  transform: scale(1.08);
   will-change: transform;
 }
+/* 
+  ╔══════════════════════════════════════════════════╗
+  ║  IMAGE SLOT: hero-bg-img                         ║
+  ║  Recommended: full interior shot with glass       ║
+  ║  Source file: /desktop/TPG/[hero-image]          ║
+  ╚══════════════════════════════════════════════════╝
+*/
+
+/* Animated light refraction lines — the signature element */
 .glass-lines {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 2;
   pointer-events: none;
   overflow: hidden;
 }
 .glass-line {
   position: absolute;
   width: 1px;
-  background: linear-gradient(to bottom,
-    transparent 0%,
-    rgba(168,200,216,0.12) 30%,
-    rgba(200,228,240,0.35) 50%,
-    rgba(168,200,216,0.12) 70%,
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    rgba(168, 200, 216, 0.15) 30%, 
+    rgba(200, 228, 240, 0.4) 50%, 
+    rgba(168, 200, 216, 0.15) 70%, 
     transparent 100%);
   height: 100%;
   top: 0;
   will-change: transform, opacity;
 }
+
 .hero-content {
   position: relative;
-  z-index: 4;
-  max-width: 820px;
+  z-index: 3;
+  max-width: 780px;
 }
 .hero-eyebrow {
   font-family: var(--font-body);
@@ -210,22 +233,6 @@ nav::before {
   opacity: 0;
   transform: translateY(20px);
 }
-.hero-eyebrow-right {
-  position: absolute;
-  right: 80px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  transform-origin: center center;
-  font-family: var(--font-body);
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--chrome-dim);
-  z-index: 3;
-  white-space: nowrap;
-  opacity: 0;
-}
 .hero-headline {
   font-family: var(--font-display);
   font-size: clamp(60px, 8.5vw, 130px);
@@ -233,21 +240,28 @@ nav::before {
   line-height: 0.92;
   letter-spacing: -0.01em;
   margin-bottom: 36px;
+  overflow: hidden;
 }
-.hero-headline .line { display: block; overflow: hidden; }
+.hero-headline .line {
+  display: block;
+  overflow: hidden;
+}
 .hero-headline .line span {
   display: inline-block;
   transform: translateY(110%);
   will-change: transform;
 }
-.hero-headline em { font-style: italic; color: var(--ice-bright); }
+.hero-headline em {
+  font-style: italic;
+  color: var(--ice-bright);
+}
 .hero-sub {
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 300;
   line-height: 1.8;
   color: var(--bone-dim);
-  max-width: 400px;
+  max-width: 380px;
   opacity: 0;
   transform: translateY(20px);
   margin-bottom: 48px;
@@ -283,22 +297,25 @@ nav::before {
   text-transform: uppercase;
   color: var(--bone-dim);
   text-decoration: none;
-  border-bottom: 1px solid rgba(168,200,216,0.3);
+  border-bottom: 1px solid rgba(168, 200, 216, 0.3);
   padding-bottom: 4px;
   transition: color 0.3s, border-color 0.3s;
 }
 .btn-ghost:hover { color: var(--ice-bright); border-color: var(--ice-bright); }
+
 .hero-scroll-hint {
   position: absolute;
-  bottom: 48px; left: 80px;
-  z-index: 4;
+  bottom: 48px;
+  left: 80px;
+  z-index: 3;
   display: flex;
   align-items: center;
   gap: 16px;
   opacity: 0;
 }
 .scroll-line {
-  width: 48px; height: 1px;
+  width: 48px;
+  height: 1px;
   background: var(--chrome-dim);
   position: relative;
   overflow: hidden;
@@ -323,15 +340,20 @@ nav::before {
   text-transform: uppercase;
   color: var(--chrome-dim);
 }
+
+/* Hero stat bar */
 .hero-stats {
   position: absolute;
-  bottom: 48px; right: 80px;
-  z-index: 4;
+  bottom: 48px;
+  right: 80px;
+  z-index: 3;
   display: flex;
   gap: 48px;
   opacity: 0;
 }
-.stat { text-align: right; }
+.stat {
+  text-align: right;
+}
 .stat-number {
   font-family: var(--font-display);
   font-size: 32px;
@@ -349,18 +371,19 @@ nav::before {
   margin-top: 4px;
 }
 
-/* ── MARQUEE ───────────────────────────── */
+/* ── MARQUEE ─────────────────────────────────────────────── */
 .marquee-wrap {
   padding: 20px 0;
   background: var(--obsidian-2);
-  border-top: 1px solid rgba(168,200,216,0.08);
-  border-bottom: 1px solid rgba(168,200,216,0.08);
+  border-top: 1px solid rgba(168, 200, 216, 0.08);
+  border-bottom: 1px solid rgba(168, 200, 216, 0.08);
   overflow: hidden;
 }
 .marquee-track {
   display: flex;
+  gap: 0;
   white-space: nowrap;
-  animation: marqueeRoll 30s linear infinite;
+  animation: marqueeRoll 28s linear infinite;
 }
 .marquee-item {
   font-family: var(--font-stamp);
@@ -372,14 +395,29 @@ nav::before {
   align-items: center;
   gap: 48px;
 }
-.marquee-item::after { content: '✦'; color: var(--ice); font-size: 8px; }
+.marquee-item::after {
+  content: '✦';
+  color: var(--ice);
+  font-size: 8px;
+}
 @keyframes marqueeRoll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-/* ── SECTION LABELS ───────────────────── */
-section { position: relative; }
+/* ── INTRO STATEMENT ─────────────────────────────────────── */
+.intro-statement {
+  padding: 160px 80px;
+  display: flex;
+  align-items: flex-start;
+  gap: 80px;
+  background: var(--obsidian);
+}
+.intro-label-col {
+  flex-shrink: 0;
+  width: 200px;
+  padding-top: 12px;
+}
 .section-label {
   font-family: var(--font-body);
   font-size: 9px;
@@ -393,24 +431,13 @@ section { position: relative; }
 .section-label::before {
   content: '';
   display: block;
-  width: 32px; height: 1px;
+  width: 32px;
+  height: 1px;
   background: var(--ice);
 }
-
-/* ── INTRO STATEMENT ──────────────────── */
-.intro-statement {
-  padding: 160px 80px;
-  display: flex;
-  align-items: flex-start;
-  gap: 80px;
-  background: var(--obsidian);
+.intro-text-col {
+  flex: 1;
 }
-.intro-label-col {
-  flex-shrink: 0;
-  width: 200px;
-  padding-top: 12px;
-}
-.intro-text-col { flex: 1; }
 .intro-statement h2 {
   font-family: var(--font-display);
   font-size: clamp(32px, 4vw, 60px);
@@ -419,7 +446,10 @@ section { position: relative; }
   letter-spacing: -0.01em;
   margin-bottom: 40px;
 }
-.intro-statement h2 em { font-style: italic; color: var(--ice-bright); }
+.intro-statement h2 em {
+  font-style: italic;
+  color: var(--ice-bright);
+}
 .intro-body {
   font-family: var(--font-body);
   font-size: 15px;
@@ -436,8 +466,11 @@ section { position: relative; }
   opacity: 0.3;
 }
 
-/* ── CINEMATIC ZOOM ───────────────────── */
-.zoom-section { height: 350vh; position: relative; }
+/* ── CINEMATIC ZOOM SECTION ──────────────────────────────── */
+.zoom-section {
+  height: 350vh; /* Pin duration */
+  position: relative;
+}
 .zoom-sticky {
   position: sticky;
   top: 0;
@@ -450,16 +483,26 @@ section { position: relative; }
 .zoom-img {
   position: absolute;
   inset: -5%;
-  width: 110%; height: 110%;
+  width: 110%;
+  height: 110%;
   object-fit: cover;
   transform-origin: center center;
   will-change: transform, filter;
-  filter: brightness(0.45) saturate(0.6);
+  filter: brightness(0.5) saturate(0.6);
 }
+/*
+  ╔══════════════════════════════════════════════════╗
+  ║  IMAGE SLOT: zoom-img                            ║
+  ║  Best: frameless shower enclosure close-up       ║
+  ║  or glass railing with background view           ║
+  ║  Source file: /desktop/TPG/[shower-or-railing]   ║
+  ╚══════════════════════════════════════════════════╝
+*/
 .zoom-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 20%, rgba(8,10,12,0.7) 100%);
+  background: radial-gradient(ellipse at center, 
+    transparent 20%, rgba(8,10,12,0.7) 100%);
   pointer-events: none;
   z-index: 2;
 }
@@ -488,7 +531,7 @@ section { position: relative; }
   will-change: opacity;
 }
 
-/* ── SERVICES ─────────────────────────── */
+/* ── SERVICES ─────────────────────────────────────────────── */
 .services-section {
   padding: 120px 0 160px;
   background: var(--obsidian);
@@ -506,7 +549,6 @@ section { position: relative; }
   font-weight: 300;
   letter-spacing: -0.01em;
 }
-.services-header h2 em { font-style: italic; color: var(--ice-bright); }
 .services-count {
   font-family: var(--font-body);
   font-size: 11px;
@@ -514,6 +556,8 @@ section { position: relative; }
   text-transform: uppercase;
   color: var(--bone-dim);
 }
+
+/* Horizontal scroll service cards */
 .services-track-wrap {
   overflow: hidden;
   padding-left: 80px;
@@ -526,12 +570,11 @@ section { position: relative; }
 }
 .service-card {
   width: 400px;
-  height: 540px;
+  height: 520px;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  text-decoration: none;
 }
 .service-card-bg {
   position: absolute;
@@ -539,23 +582,38 @@ section { position: relative; }
   width: 100%; height: 100%;
   object-fit: cover;
   transform: scale(1.05);
-  filter: brightness(0.42) saturate(0.6);
-  transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.8s;
+  filter: brightness(0.45) saturate(0.6);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.8s;
   will-change: transform, filter;
 }
 .service-card:hover .service-card-bg {
   transform: scale(1.12);
-  filter: brightness(0.55) saturate(0.85);
+  filter: brightness(0.55) saturate(0.8);
 }
+
+/* Card background fallback colors */
 .service-card:nth-child(1) { background: #0A1218; }
 .service-card:nth-child(2) { background: #0C1015; }
 .service-card:nth-child(3) { background: #0A1014; }
 .service-card:nth-child(4) { background: #0D1218; }
 .service-card:nth-child(5) { background: #0A1015; }
+
+/*
+  ╔══════════════════════════════════════════════════╗
+  ║  IMAGE SLOTS: service-card-bg (5 cards)          ║
+  ║  Card 1: Shower enclosure    /desktop/TPG/       ║
+  ║  Card 2: Glass railing       /desktop/TPG/       ║
+  ║  Card 3: Mirror              /desktop/TPG/       ║
+  ║  Card 4: Closet door         /desktop/TPG/       ║
+  ║  Card 5: Office partition    /desktop/TPG/       ║
+  ╚══════════════════════════════════════════════════╝
+*/
+
 .service-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(8,10,12,0.92) 30%, rgba(8,10,12,0.08) 70%);
+  background: linear-gradient(to top, rgba(8,10,12,0.92) 30%, rgba(8,10,12,0.1) 70%);
   z-index: 2;
 }
 .service-card-content {
@@ -588,10 +646,14 @@ section { position: relative; }
   color: var(--bone-dim);
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s;
+  transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.4s;
   opacity: 0;
 }
-.service-card:hover .service-desc { max-height: 80px; opacity: 1; }
+.service-card:hover .service-desc {
+  max-height: 80px;
+  opacity: 1;
+}
 .service-arrow {
   display: inline-flex;
   align-items: center;
@@ -606,14 +668,26 @@ section { position: relative; }
   transform: translateX(-8px);
   transition: opacity 0.4s 0.1s, transform 0.4s 0.1s;
 }
-.service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
-.service-arrow::after { content: '→'; font-size: 14px; }
+.service-card:hover .service-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+.service-arrow::after {
+  content: '→';
+  font-size: 14px;
+}
+
+/* Glass shimmer on cards */
 .service-card::before {
   content: '';
   position: absolute;
   top: 0; left: -100%;
-  width: 60%; height: 100%;
-  background: linear-gradient(to right, transparent, rgba(168,200,216,0.06), transparent);
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(to right, 
+    transparent, 
+    rgba(168, 200, 216, 0.06), 
+    transparent);
   transform: skewX(-15deg);
   z-index: 4;
   pointer-events: none;
@@ -621,7 +695,7 @@ section { position: relative; }
 }
 .service-card:hover::before { left: 150%; }
 
-/* ── PARALLAX REVEAL PANEL ────────────── */
+/* ── PARALLAX REVEAL PANEL ────────────────────────────────── */
 .reveal-panel {
   height: 100vh;
   position: relative;
@@ -632,15 +706,23 @@ section { position: relative; }
 .reveal-bg {
   position: absolute;
   inset: -10%;
-  width: 120%; height: 120%;
+  width: 120%;
+  height: 120%;
   object-fit: cover;
-  filter: brightness(0.28) saturate(0.4);
+  filter: brightness(0.3) saturate(0.4);
   will-change: transform;
 }
+/*
+  ╔══════════════════════════════════════════════════╗
+  ║  IMAGE SLOT: reveal-bg                           ║
+  ║  Best: wide-angle railing or staircase shot      ║
+  ║  Source file: /desktop/TPG/[railing-wide]        ║
+  ╚══════════════════════════════════════════════════╝
+*/
 .reveal-panel-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(8,10,12,0.9) 40%, transparent 100%);
+  background: linear-gradient(to right, rgba(8,10,12,0.88) 40%, transparent 100%);
   z-index: 2;
 }
 .reveal-panel-content {
@@ -649,7 +731,9 @@ section { position: relative; }
   padding: 0 80px;
   max-width: 640px;
 }
-.reveal-panel-content .section-label { margin-bottom: 32px; }
+.reveal-panel-content .section-label {
+  margin-bottom: 32px;
+}
 .reveal-panel-content h2 {
   font-family: var(--font-display);
   font-size: clamp(42px, 5vw, 76px);
@@ -658,7 +742,10 @@ section { position: relative; }
   letter-spacing: -0.01em;
   margin-bottom: 32px;
 }
-.reveal-panel-content h2 em { font-style: italic; color: var(--ice-bright); }
+.reveal-panel-content h2 em {
+  font-style: italic;
+  color: var(--ice-bright);
+}
 .reveal-panel-content p {
   font-family: var(--font-body);
   font-size: 14px;
@@ -667,8 +754,11 @@ section { position: relative; }
   color: var(--bone-dim);
   margin-bottom: 48px;
 }
+.reveal-panel-content .btn-primary {
+  display: inline-block;
+}
 
-/* ── PROCESS ───────────────────────────── */
+/* ── PROCESS ─────────────────────────────────────────────── */
 .process-section {
   padding: 160px 80px;
   background: var(--obsidian-2);
@@ -681,12 +771,15 @@ section { position: relative; }
   margin-bottom: 80px;
   max-width: 500px;
 }
-.process-section h2 em { font-style: italic; color: var(--ice-bright); }
+.process-section h2 em {
+  font-style: italic;
+  color: var(--ice-bright);
+}
 .process-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
-  background: rgba(168,200,216,0.08);
+  background: rgba(168, 200, 216, 0.08);
 }
 .process-step {
   background: var(--obsidian-2);
@@ -702,7 +795,7 @@ section { position: relative; }
   background: linear-gradient(to right, var(--ice), transparent);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .process-step:hover::before { transform: scaleX(1); }
 .step-num {
@@ -728,24 +821,29 @@ section { position: relative; }
   color: var(--bone-dim);
 }
 
-/* ── TESTIMONIALS ──────────────────────── */
+/* ── TESTIMONIALS ────────────────────────────────────────── */
 .testimonials-section {
   padding: 160px 80px;
   background: var(--obsidian);
 }
-.testimonials-header { margin-bottom: 80px; }
+.testimonials-header {
+  margin-bottom: 80px;
+}
 .testimonials-header h2 {
   font-family: var(--font-display);
   font-size: clamp(36px, 4vw, 60px);
   font-weight: 300;
   letter-spacing: -0.01em;
 }
-.testimonials-header h2 em { font-style: italic; color: var(--ice-bright); }
+.testimonials-header h2 em {
+  font-style: italic;
+  color: var(--ice-bright);
+}
 .testimonials-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1px;
-  background: rgba(168,200,216,0.06);
+  background: rgba(168, 200, 216, 0.06);
 }
 .testimonial-card {
   background: var(--obsidian);
@@ -759,11 +857,16 @@ section { position: relative; }
   font-family: var(--font-display);
   font-size: 120px;
   font-weight: 300;
-  color: rgba(168,200,216,0.05);
+  color: rgba(168, 200, 216, 0.06);
   line-height: 1;
   pointer-events: none;
 }
-.testimonial-stars { color: var(--ice); font-size: 11px; letter-spacing: 3px; margin-bottom: 24px; }
+.testimonial-stars {
+  color: var(--ice);
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+}
 .testimonial-quote {
   font-family: var(--font-display);
   font-size: 18px;
@@ -780,9 +883,14 @@ section { position: relative; }
   text-transform: uppercase;
   color: var(--bone-dim);
 }
-.testimonial-role { font-size: 10px; color: var(--chrome-dim); margin-top: 4px; letter-spacing: 0.1em; }
+.testimonial-role {
+  font-size: 10px;
+  color: var(--chrome-dim);
+  margin-top: 4px;
+  letter-spacing: 0.1em;
+}
 
-/* ── GALLERY PREVIEW ───────────────────── */
+/* ── FULL-BLEED GALLERY ──────────────────────────────────── */
 .gallery-section {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -793,19 +901,23 @@ section { position: relative; }
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  text-decoration: none;
-  display: block;
 }
-.gallery-cell.tall { grid-row: span 2; }
+.gallery-cell.tall {
+  grid-row: span 2;
+}
 .gallery-cell img {
   width: 100%; height: 100%;
   object-fit: cover;
-  filter: brightness(0.55) saturate(0.7);
+  filter: brightness(0.6) saturate(0.7);
   transform: scale(1.04);
-  transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.6s;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.6s;
   will-change: transform;
 }
-.gallery-cell:hover img { transform: scale(1.10); filter: brightness(0.72) saturate(0.9); }
+.gallery-cell:hover img {
+  transform: scale(1.10);
+  filter: brightness(0.75) saturate(0.9);
+}
 .gallery-cell-label {
   position: absolute;
   bottom: 24px; left: 24px;
@@ -818,18 +930,31 @@ section { position: relative; }
   transform: translateY(8px);
   transition: opacity 0.4s, transform 0.4s;
 }
-.gallery-cell:hover .gallery-cell-label { opacity: 1; transform: translateY(0); }
-.gallery-view-all {
-  grid-column: span 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 48px;
-  background: var(--obsidian-2);
-  border-top: 1px solid rgba(168,200,216,0.08);
+.gallery-cell:hover .gallery-cell-label {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* ── CTA SECTION ──────────────────────── */
+/* Gallery cell backgrounds */
+.gallery-cell:nth-child(1) { background: #0A1218; }
+.gallery-cell:nth-child(2) { background: #0C1015; }
+.gallery-cell:nth-child(3) { background: #0A1014; }
+.gallery-cell:nth-child(4) { background: #0D1218; }
+.gallery-cell:nth-child(5) { background: #0A1015; }
+
+/*
+  ╔══════════════════════════════════════════════════╗
+  ║  IMAGE SLOTS: gallery-cell (5 cells)             ║
+  ║  Cell 1 (tall): best hero/railing shot           ║
+  ║  Cell 2: shower interior                         ║
+  ║  Cell 3: mirror close-up                         ║
+  ║  Cell 4: hardware detail                         ║
+  ║  Cell 5: closet/partition                        ║
+  ║  Source: /desktop/TPG/                           ║
+  ╚══════════════════════════════════════════════════╝
+*/
+
+/* ── CTA SECTION ─────────────────────────────────────────── */
 .cta-section {
   padding: 160px 80px;
   background: var(--obsidian);
@@ -845,7 +970,10 @@ section { position: relative; }
   line-height: 0.95;
   letter-spacing: -0.02em;
 }
-.cta-left h2 em { font-style: italic; color: var(--ice-bright); }
+.cta-left h2 em {
+  font-style: italic;
+  color: var(--ice-bright);
+}
 .cta-right p {
   font-family: var(--font-body);
   font-size: 15px;
@@ -856,7 +984,8 @@ section { position: relative; }
 }
 .cta-form-row {
   display: flex;
-  border: 1px solid rgba(168,200,216,0.2);
+  gap: 0;
+  border: 1px solid rgba(168, 200, 216, 0.2);
   overflow: hidden;
 }
 .cta-input {
@@ -872,7 +1001,6 @@ section { position: relative; }
   letter-spacing: 0.05em;
 }
 .cta-input::placeholder { color: var(--chrome-dim); }
-.cta-input:focus { background: rgba(168,200,216,0.04); }
 .cta-submit {
   background: var(--ice-bright);
   border: none;
@@ -888,8 +1016,16 @@ section { position: relative; }
   transition: background 0.3s;
 }
 .cta-submit:hover { background: var(--bone); }
-.cta-contact-info { margin-top: 32px; display: flex; gap: 40px; flex-wrap: wrap; }
-.contact-item { display: flex; flex-direction: column; gap: 4px; }
+.cta-contact-info {
+  margin-top: 32px;
+  display: flex;
+  gap: 40px;
+}
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 .contact-type {
   font-family: var(--font-body);
   font-size: 9px;
@@ -904,19 +1040,18 @@ section { position: relative; }
   color: var(--bone);
 }
 
-/* ── FOOTER ─────────────────────────────── */
+/* ── FOOTER ──────────────────────────────────────────────── */
 footer {
   background: var(--obsidian-3);
-  border-top: 1px solid rgba(168,200,216,0.08);
-  padding: 80px 80px 40px;
+  border-top: 1px solid rgba(168, 200, 216, 0.08);
+  padding: 60px 80px 40px;
 }
 .footer-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 64px;
+  margin-bottom: 48px;
 }
-.footer-brand {}
 .footer-logo {
   font-family: var(--font-display);
   font-size: 24px;
@@ -924,8 +1059,6 @@ footer {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--bone);
-  text-decoration: none;
-  display: block;
 }
 .footer-logo span { color: var(--ice); }
 .footer-tagline {
@@ -933,22 +1066,25 @@ footer {
   font-size: 11px;
   color: var(--chrome-dim);
   letter-spacing: 0.1em;
-  margin-top: 8px;
+  margin-top: 6px;
 }
-.footer-nav { display: flex; gap: 80px; }
+.footer-nav {
+  display: flex;
+  gap: 80px;
+}
 .footer-nav-col h4 {
   font-family: var(--font-body);
   font-size: 9px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--ice);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 .footer-nav-col ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 .footer-nav-col a {
   font-family: var(--font-body);
@@ -960,80 +1096,133 @@ footer {
 }
 .footer-nav-col a:hover { color: var(--bone); }
 .footer-bottom {
-  border-top: 1px solid rgba(168,200,216,0.06);
-  padding-top: 28px;
+  border-top: 1px solid rgba(168, 200, 216, 0.06);
+  padding-top: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.footer-copy { font-family: var(--font-body); font-size: 11px; color: var(--chrome-dim); letter-spacing: 0.05em; }
-.footer-badge { font-family: var(--font-stamp); font-size: 9px; letter-spacing: 0.3em; color: var(--chrome-dim); }
+.footer-copy {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--chrome-dim);
+  letter-spacing: 0.05em;
+}
+.footer-badge {
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--chrome-dim);
+}
 
-/* ── SCROLL REVEAL ─────────────────────── */
-.reveal-up { opacity: 0; transform: translateY(40px); }
-.reveal-left { opacity: 0; transform: translateX(-40px); }
+/* ── SCROLL-REVEAL UTILITY ───────────────────────────────── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
 
-/* ── MOBILE ────────────────────────────── */
+/* ── GLASS REFRACTION OVERLAY ────────────────────────────── */
+.glass-panel-accent {
+  position: absolute;
+  top: 0; right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, 
+    transparent, 
+    rgba(168, 200, 216, 0.3) 50%, 
+    transparent);
+  pointer-events: none;
+}
+
+/* ── MOBILE ──────────────────────────────────────────────── */
 @media (max-width: 900px) {
   nav { padding: 20px 24px; }
   .nav-links, .nav-cta { display: none; }
+
   .hero { padding: 0 24px; }
   .hero-stats { right: 24px; gap: 24px; }
   .hero-scroll-hint { left: 24px; }
-  .intro-statement { flex-direction: column; padding: 80px 24px; gap: 40px; }
+
+  .intro-statement { 
+    flex-direction: column; 
+    padding: 80px 24px; 
+    gap: 40px; 
+  }
   .intro-label-col { width: auto; }
   .intro-rule { display: none; }
+
   .services-header { padding: 0 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
   .services-track-wrap { padding-left: 24px; }
   .service-card { width: 300px; height: 420px; }
+
   .reveal-panel-content { padding: 0 24px; }
+
   .process-section { padding: 80px 24px; }
   .process-grid { grid-template-columns: 1fr 1fr; }
+
   .testimonials-section { padding: 80px 24px; }
   .testimonials-grid { grid-template-columns: 1fr; }
+
   .gallery-section { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
   .gallery-cell.tall { grid-row: span 1; }
-  .gallery-view-all { grid-column: span 2; }
-  .cta-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
-  footer { padding: 48px 24px 28px; }
-  .footer-top { flex-direction: column; gap: 48px; }
-  .footer-nav { gap: 40px; flex-wrap: wrap; }
-  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+
+  .cta-section { 
+    grid-template-columns: 1fr; 
+    padding: 80px 24px; 
+    gap: 40px;
+  }
+
+  footer { padding: 40px 24px 24px; }
+  .footer-top { flex-direction: column; gap: 40px; }
+  .footer-nav { gap: 40px; }
+  .footer-bottom { flex-direction: column; gap: 12px; }
 }
 </style>
 </head>
 <body>
 
+<!-- Custom cursor -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
-<nav id="mainNav">
-  <a class="nav-logo" href="index.html">Toronto <span>Premium</span> Glass</a>
+<!-- ── NAV ─────────────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="#">Toronto <span>Premium</span> Glass</a>
   <ul class="nav-links">
-    <li><a href="index.html" class="active">Home</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <a class="nav-cta" href="contact.html">Get a Quote</a>
+  <a class="nav-cta" href="tel:+14161234567">Get a Quote</a>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ────────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <video class="hero-video" autoplay muted loop playsinline poster="images/hero-bg.jpg">
-    <source src="images/hero-video.mp4" type="video/mp4">
-  </video>
+  <!-- 
+    TO ADD YOUR IMAGE: replace the src below with the path to your hero image
+    <img class="hero-bg-img" src="/desktop/TPG/YOUR-HERO-IMAGE.jpg" alt="">
+  -->
+  <img class="hero-bg-img" 
+       src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1600&q=80" 
+       alt="Toronto Premium Glass interior">
+
+  <!-- Light refraction lines -->
   <div class="glass-lines">
-    <div class="glass-line" style="left:12%"></div>
-    <div class="glass-line" style="left:28%"></div>
-    <div class="glass-line" style="left:55%"></div>
-    <div class="glass-line" style="left:71%"></div>
-    <div class="glass-line" style="left:86%"></div>
+    <div class="glass-line" style="left:15%"></div>
+    <div class="glass-line" style="left:32%"></div>
+    <div class="glass-line" style="left:58%"></div>
+    <div class="glass-line" style="left:74%"></div>
+    <div class="glass-line" style="left:88%"></div>
   </div>
+
   <div class="hero-content">
+    <div class="hero-eyebrow">Toronto's Premier Glass Studio · Est. GTA</div>
     <h1 class="hero-headline">
       <span class="line"><span>Where</span></span>
       <span class="line"><span><em>Light</em> Lives</span></span>
@@ -1041,14 +1230,16 @@ footer {
     </h1>
     <p class="hero-sub">Custom shower enclosures, glass railings, and precision-crafted mirrors — designed for spaces that demand more than ordinary.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="contact.html">Request a Consultation</a>
-      <a class="btn-ghost" href="gallery.html">View Our Work</a>
+      <a class="btn-primary" href="#contact">Request a Consultation</a>
+      <a class="btn-ghost" href="#gallery">View Our Work</a>
     </div>
   </div>
+
   <div class="hero-scroll-hint">
     <div class="scroll-line"></div>
     <span class="scroll-label">Scroll to explore</span>
   </div>
+
   <div class="hero-stats">
     <div class="stat">
       <span class="stat-number">500+</span>
@@ -1063,10 +1254,9 @@ footer {
       <span class="stat-label">Google Rating</span>
     </div>
   </div>
-  <div class="hero-eyebrow-right">Toronto Premium Glass · GTA · Custom Glazing Studio</div>
 </section>
 
-<!-- MARQUEE -->
+<!-- ── MARQUEE ──────────────────────────────────────── -->
 <div class="marquee-wrap">
   <div class="marquee-track">
     <div class="marquee-item">Custom Shower Enclosures</div>
@@ -1075,18 +1265,16 @@ footer {
     <div class="marquee-item">Closet Doors</div>
     <div class="marquee-item">Office Partitions</div>
     <div class="marquee-item">Barn Doors</div>
-    <div class="marquee-item">Wire Shelving</div>
     <div class="marquee-item">Custom Shower Enclosures</div>
     <div class="marquee-item">Glass Railings</div>
     <div class="marquee-item">Vanity Mirrors</div>
     <div class="marquee-item">Closet Doors</div>
     <div class="marquee-item">Office Partitions</div>
     <div class="marquee-item">Barn Doors</div>
-    <div class="marquee-item">Wire Shelving</div>
   </div>
 </div>
 
-<!-- INTRO STATEMENT -->
+<!-- ── INTRO STATEMENT ──────────────────────────────── -->
 <section class="intro-statement">
   <div class="intro-label-col">
     <div class="section-label">Our Philosophy</div>
@@ -1098,10 +1286,16 @@ footer {
   </div>
 </section>
 
-<!-- CINEMATIC ZOOM -->
+<!-- ── CINEMATIC ZOOM ────────────────────────────────── -->
 <section class="zoom-section">
   <div class="zoom-sticky">
-    <img class="zoom-img" src="images/pg-shower-enclosure.jpg" alt="Premium frameless shower enclosure">
+    <!-- 
+      TO ADD YOUR IMAGE: replace src below
+      <img class="zoom-img" src="/desktop/TPG/YOUR-SHOWER-OR-RAILING.jpg" alt="">
+    -->
+    <img class="zoom-img" 
+         src="https://images.unsplash.com/photo-1631889993959-41b4e9c6e3c5?w=1600&q=80" 
+         alt="Premium glass installation">
     <div class="zoom-overlay"></div>
     <div class="zoom-text">
       <div class="zoom-tagline">Frameless.<br>Flawless.<br><em>Yours.</em></div>
@@ -1110,7 +1304,7 @@ footer {
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- ── SERVICES ──────────────────────────────────────── -->
 <section class="services-section" id="services">
   <div class="services-header">
     <h2 class="reveal-up">What we<br><em>craft for you</em></h2>
@@ -1119,8 +1313,11 @@ footer {
   <div class="services-track-wrap">
     <div class="services-track" id="servicesTrack">
 
-      <a class="service-card" href="services.html#showers">
-        <img class="service-card-bg" src="images/pg-shower-hero.jpg" alt="Custom Shower Enclosures">
+      <div class="service-card">
+        <!-- Replace with: <img class="service-card-bg" src="/desktop/TPG/shower.jpg" alt=""> -->
+        <img class="service-card-bg" 
+             src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80" 
+             alt="Custom Shower Enclosures">
         <div class="service-card-overlay"></div>
         <div class="service-card-content">
           <span class="service-num">01</span>
@@ -1128,10 +1325,13 @@ footer {
           <div class="service-desc">Frameless and semi-frameless custom glass shower enclosures built to transform your bathroom into a spa-level experience.</div>
           <span class="service-arrow">Explore</span>
         </div>
-      </a>
+      </div>
 
-      <a class="service-card" href="services.html#railings">
-        <img class="service-card-bg" src="images/Exterior_residential_deck_with_sleek_202606201540%20(1).jpeg" alt="Glass Railings">
+      <div class="service-card">
+        <!-- Replace with: <img class="service-card-bg" src="/desktop/TPG/railing.jpg" alt=""> -->
+        <img class="service-card-bg" 
+             src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80" 
+             alt="Glass Railings">
         <div class="service-card-overlay"></div>
         <div class="service-card-content">
           <span class="service-num">02</span>
@@ -1139,10 +1339,13 @@ footer {
           <div class="service-desc">Interior and exterior glass railings for staircases, balconies, and decks. Contemporary, durable, and unobstructed.</div>
           <span class="service-arrow">Explore</span>
         </div>
-      </a>
+      </div>
 
-      <a class="service-card" href="services.html#mirrors">
-        <img class="service-card-bg" src="images/pg-glass-mirror-hero.jpg" alt="Vanity Mirrors">
+      <div class="service-card">
+        <!-- Replace with: <img class="service-card-bg" src="/desktop/TPG/mirror.jpg" alt=""> -->
+        <img class="service-card-bg" 
+             src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" 
+             alt="Vanity Mirrors">
         <div class="service-card-overlay"></div>
         <div class="service-card-content">
           <span class="service-num">03</span>
@@ -1150,10 +1353,13 @@ footer {
           <div class="service-desc">Custom-cut mirrors for bathrooms, gyms, hallways, and commercial spaces — framed, frameless, or beveled.</div>
           <span class="service-arrow">Explore</span>
         </div>
-      </a>
+      </div>
 
-      <a class="service-card" href="services.html#closets">
-        <img class="service-card-bg" src="images/pg-closet-hero.jpg" alt="Closet & Barn Doors">
+      <div class="service-card">
+        <!-- Replace with: <img class="service-card-bg" src="/desktop/TPG/closet.jpg" alt=""> -->
+        <img class="service-card-bg" 
+             src="https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=800&q=80" 
+             alt="Closet & Barn Doors">
         <div class="service-card-overlay"></div>
         <div class="service-card-content">
           <span class="service-num">04</span>
@@ -1161,10 +1367,13 @@ footer {
           <div class="service-desc">Sleek sliding glass closet doors and contemporary barn-door systems that combine function with architectural presence.</div>
           <span class="service-arrow">Explore</span>
         </div>
-      </a>
+      </div>
 
-      <a class="service-card" href="services.html#partitions">
-        <img class="service-card-bg" src="images/pg-aluminum-hero.jpg" alt="Office Partitions">
+      <div class="service-card">
+        <!-- Replace with: <img class="service-card-bg" src="/desktop/TPG/partition.jpg" alt=""> -->
+        <img class="service-card-bg" 
+             src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" 
+             alt="Office Partitions">
         <div class="service-card-overlay"></div>
         <div class="service-card-content">
           <span class="service-num">05</span>
@@ -1172,25 +1381,28 @@ footer {
           <div class="service-desc">Floor-to-ceiling glass walls and partitions for commercial interiors — open, light-filled, and professionally finished.</div>
           <span class="service-arrow">Explore</span>
         </div>
-      </a>
+      </div>
 
     </div>
   </div>
 </section>
 
-<!-- PARALLAX REVEAL PANEL -->
+<!-- ── PARALLAX PANEL ────────────────────────────────── -->
 <section class="reveal-panel">
-  <img class="reveal-bg" src="images/Exterior_residential_deck_with_sleek_202606201540%20(1).jpeg" alt="Glass railing installation">
+  <!-- Replace with: <img class="reveal-bg" src="/desktop/TPG/railing-wide.jpg" alt=""> -->
+  <img class="reveal-bg" 
+       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80" 
+       alt="Glass railing installation">
   <div class="reveal-panel-overlay"></div>
   <div class="reveal-panel-content">
     <div class="section-label">Why Choose Us</div>
     <h2 class="reveal-left">Trade expertise.<br><em>Luxury finish.</em></h2>
     <p class="reveal-left">We're glaziers first. Our team comes from the trade — not a showroom. That means precise measurements, flawless seals, and installations that last. Every project we take on in the GTA gets the same attention we'd give our own home.</p>
-    <a class="btn-primary reveal-left" href="contact.html">Talk to a Glazier</a>
+    <a class="btn-primary reveal-left" href="#contact">Talk to a Glazier</a>
   </div>
 </section>
 
-<!-- PROCESS -->
+<!-- ── PROCESS ───────────────────────────────────────── -->
 <section class="process-section" id="process">
   <h2 class="reveal-up">Our process is<br><em>simple by design</em></h2>
   <div class="process-grid">
@@ -1217,10 +1429,10 @@ footer {
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- ── TESTIMONIALS ──────────────────────────────────── -->
 <section class="testimonials-section">
   <div class="testimonials-header reveal-up">
-    <div class="section-label" style="margin-bottom:28px">Client Stories</div>
+    <div class="section-label" style="margin-bottom:28px;">Client Stories</div>
     <h2>What Toronto<br><em>homeowners say</em></h2>
   </div>
   <div class="testimonials-grid">
@@ -1245,34 +1457,34 @@ footer {
   </div>
 </section>
 
-<!-- GALLERY PREVIEW -->
+<!-- ── GALLERY ───────────────────────────────────────── -->
 <section class="gallery-section" id="gallery">
-  <a class="gallery-cell tall" href="gallery.html">
-    <img src="images/gal-full-06.jpg" alt="Glass railing detail">
+  <!-- 
+    Replace all src values with your /desktop/TPG/ images
+  -->
+  <div class="gallery-cell tall">
+    <img src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=800&q=80" alt="Glass railing detail">
     <div class="gallery-cell-label">Glass Railings</div>
-  </a>
-  <a class="gallery-cell" href="gallery.html">
-    <img src="images/gal-full-01.jpg" alt="Shower enclosure">
+  </div>
+  <div class="gallery-cell">
+    <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80" alt="Shower enclosure">
     <div class="gallery-cell-label">Shower Enclosures</div>
-  </a>
-  <a class="gallery-cell" href="gallery.html">
-    <img src="images/gal-full-09.jpg" alt="Vanity mirror">
+  </div>
+  <div class="gallery-cell">
+    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80" alt="Vanity mirror">
     <div class="gallery-cell-label">Vanity Mirrors</div>
-  </a>
-  <a class="gallery-cell" href="gallery.html">
-    <img src="images/gal-full-14.jpg" alt="Hardware detail">
+  </div>
+  <div class="gallery-cell">
+    <img src="https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=80" alt="Hardware detail">
     <div class="gallery-cell-label">Hardware Detail</div>
-  </a>
-  <a class="gallery-cell" href="gallery.html">
-    <img src="images/gal-full-17.jpg" alt="Office partition">
+  </div>
+  <div class="gallery-cell">
+    <img src="https://images.unsplash.com/photo-1497366754035-f200581663b3?w=800&q=80" alt="Office partition">
     <div class="gallery-cell-label">Office Partitions</div>
-  </a>
-  <div class="gallery-view-all">
-    <a class="btn-primary" href="gallery.html">View Full Gallery →</a>
   </div>
 </section>
 
-<!-- CTA -->
+<!-- ── CTA ──────────────────────────────────────────── -->
 <section class="cta-section" id="contact">
   <div class="cta-left">
     <h2 class="reveal-left">Ready to<br>build in<br><em>glass?</em></h2>
@@ -1300,41 +1512,41 @@ footer {
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ────────────────────────────────────────── -->
 <footer>
   <div class="footer-top">
-    <div class="footer-brand">
-      <a class="footer-logo" href="index.html">Toronto <span>Premium</span> Glass</a>
+    <div>
+      <div class="footer-logo">Toronto <span>Premium</span> Glass</div>
       <div class="footer-tagline">Crafted in Light · Installed with Precision</div>
     </div>
     <div class="footer-nav">
       <div class="footer-nav-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="services.html#showers">Shower Enclosures</a></li>
-          <li><a href="services.html#railings">Glass Railings</a></li>
-          <li><a href="services.html#mirrors">Vanity Mirrors</a></li>
-          <li><a href="services.html#closets">Closet Doors</a></li>
-          <li><a href="services.html#partitions">Office Partitions</a></li>
+          <li><a href="#">Shower Enclosures</a></li>
+          <li><a href="#">Glass Railings</a></li>
+          <li><a href="#">Vanity Mirrors</a></li>
+          <li><a href="#">Closet Doors</a></li>
+          <li><a href="#">Office Partitions</a></li>
         </ul>
       </div>
       <div class="footer-nav-col">
         <h4>Company</h4>
         <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="index.html#process">Our Process</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Process</a></li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </div>
       <div class="footer-nav-col">
         <h4>Service Areas</h4>
         <ul>
-          <li><a href="contact.html">Toronto</a></li>
-          <li><a href="contact.html">Mississauga</a></li>
-          <li><a href="contact.html">Brampton</a></li>
-          <li><a href="contact.html">Vaughan</a></li>
-          <li><a href="contact.html">Markham</a></li>
+          <li><a href="#">Toronto</a></li>
+          <li><a href="#">Mississauga</a></li>
+          <li><a href="#">Brampton</a></li>
+          <li><a href="#">Vaughan</a></li>
+          <li><a href="#">Markham</a></li>
         </ul>
       </div>
     </div>
@@ -1345,166 +1557,308 @@ footer {
   </div>
 </footer>
 
+<!-- ── SCRIPTS ────────────────────────────────────────── -->
 <script>
-/* ── LENIS ───────────────────────────────── */
+/* ── LENIS SMOOTH SCROLL ─────────────────────────────── */
 const lenis = new Lenis({
   duration: 1.4,
   easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   orientation: 'vertical',
   smoothWheel: true,
 });
-function rafLenis(time) { lenis.raf(time); requestAnimationFrame(rafLenis); }
+function rafLenis(time) {
+  lenis.raf(time);
+  requestAnimationFrame(rafLenis);
+}
 requestAnimationFrame(rafLenis);
+
+/* Tell ScrollTrigger about Lenis scroll position */
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(time => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 
-/* ── CURSOR ──────────────────────────────── */
+/* ── CURSOR ─────────────────────────────────────────── */
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursorRing');
-let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+let mouseX = 0, mouseY = 0;
+let ringX  = 0, ringY  = 0;
+
 document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
+  mouseX = e.clientX;
+  mouseY = e.clientY;
   cursor.style.left = mouseX + 'px';
   cursor.style.top  = mouseY + 'px';
 });
-(function animateRing() {
+
+function animateRing() {
   ringX += (mouseX - ringX) * 0.1;
   ringY += (mouseY - ringY) * 0.1;
   ring.style.left = ringX + 'px';
   ring.style.top  = ringY + 'px';
   requestAnimationFrame(animateRing);
-})();
+}
+animateRing();
+
+/* Expand cursor on links/buttons */
 document.querySelectorAll('a, button').forEach(el => {
   el.addEventListener('mouseenter', () => {
-    cursor.style.width = '20px'; cursor.style.height = '20px';
-    ring.style.width = '56px'; ring.style.height = '56px';
+    cursor.style.width  = '20px';
+    cursor.style.height = '20px';
+    ring.style.width    = '56px';
+    ring.style.height   = '56px';
     ring.style.borderColor = 'rgba(168,200,216,0.8)';
   });
   el.addEventListener('mouseleave', () => {
-    cursor.style.width = '8px'; cursor.style.height = '8px';
-    ring.style.width = '36px'; ring.style.height = '36px';
+    cursor.style.width  = '8px';
+    cursor.style.height = '8px';
+    ring.style.width    = '36px';
+    ring.style.height   = '36px';
     ring.style.borderColor = 'rgba(168,200,216,0.5)';
   });
 });
 
-/* ── GSAP INIT ───────────────────────────── */
+/* ── GSAP + SCROLLTRIGGER INIT ──────────────────────── */
 gsap.registerPlugin(ScrollTrigger);
 
-/* Hero entrance */
+/* ── HERO ENTRANCE ──────────────────────────────────── */
 const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-tl.to('.hero-headline .line span', { y: '0%', duration: 1.2, stagger: 0.12, ease: 'power4.out' }, 0.5);
-tl.to('.hero-eyebrow-right', { opacity: 1, duration: 1 }, 1.8);
+
+/* Eyebrow */
+tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 1 }, 0.3);
+
+/* Headline lines stagger */
+tl.to('.hero-headline .line span', {
+  y: '0%',
+  duration: 1.2,
+  stagger: 0.12,
+  ease: 'power4.out',
+}, 0.5);
+
+/* Sub and actions */
 tl.to('.hero-sub',     { opacity: 1, y: 0, duration: 0.9 }, 1.0);
 tl.to('.hero-actions', { opacity: 1, y: 0, duration: 0.9 }, 1.2);
 tl.to('.hero-scroll-hint', { opacity: 1, duration: 0.6 }, 1.6);
 tl.to('.hero-stats',   { opacity: 1, duration: 0.8 }, 1.4);
 
-/* Hero video parallax */
-gsap.to('.hero-video', {
-  y: '18%', ease: 'none',
-  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-});
-
-/* Glass refraction lines */
-document.querySelectorAll('.glass-line').forEach((line, i) => {
-  gsap.to(line, { opacity: i % 2 === 0 ? 0.8 : 0.4, scaleY: 1.2, duration: 2, repeat: -1, yoyo: true, delay: i * 0.3, ease: 'sine.inOut' });
-  gsap.to(line, { x: i % 2 === 0 ? 8 : -8, duration: 3 + i * 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: i * 0.2 });
-});
-
-/* Cinematic zoom */
-gsap.to('.zoom-img', {
-  scale: 1.6, filter: 'brightness(0.7) saturate(0.9)', ease: 'none',
-  scrollTrigger: { trigger: '.zoom-section', start: 'top top', end: 'bottom bottom', scrub: 1.5 }
-});
-gsap.fromTo('.zoom-tagline', { opacity: 0, scale: 0.85 }, {
-  opacity: 1, scale: 1, ease: 'none',
-  scrollTrigger: { trigger: '.zoom-section', start: 'top 80%', end: 'top 20%', scrub: 1 }
-});
-gsap.to('.zoom-tagline', {
-  opacity: 0, scale: 1.1, ease: 'none',
-  scrollTrigger: { trigger: '.zoom-section', start: '70% bottom', end: 'bottom top', scrub: 1 }
-});
-gsap.fromTo('.zoom-sub', { opacity: 0, y: 20 }, {
-  opacity: 1, y: 0, ease: 'none',
-  scrollTrigger: { trigger: '.zoom-section', start: '20% top', end: '40% top', scrub: 1 }
-});
-
-/* Services horizontal scroll */
-const servicesTrack = document.getElementById('servicesTrack');
-const trackWidth = servicesTrack.scrollWidth - window.innerWidth + 80;
-const servicesSettle = 0.12;
-
-ScrollTrigger.create({
-  trigger: '.services-section',
-  start: 'top top',
-  end: () => '+=' + (trackWidth * (1 / (1 - servicesSettle)) + window.innerHeight),
-  pin: true,
-  anticipatePin: 1,
-  scrub: 1,
-  onUpdate(self) {
-    const adjusted = Math.max(0, (self.progress - servicesSettle) / (1 - servicesSettle));
-    gsap.set(servicesTrack, { x: -trackWidth * adjusted });
+/* ── HERO PARALLAX BG ───────────────────────────────── */
+gsap.to('.hero-bg-img', {
+  y: '20%',
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: true,
   }
 });
 
-/* Parallax reveal bg */
+/* ── GLASS REFRACTION LINES — animate on scroll ────── */
+const glassLines = document.querySelectorAll('.glass-line');
+glassLines.forEach((line, i) => {
+  gsap.to(line, {
+    opacity: i % 2 === 0 ? 0.8 : 0.4,
+    scaleY: 1.2,
+    duration: 2,
+    repeat: -1,
+    yoyo: true,
+    delay: i * 0.3,
+    ease: 'sine.inOut',
+  });
+  // Subtle horizontal drift
+  gsap.to(line, {
+    x: i % 2 === 0 ? 8 : -8,
+    duration: 3 + i * 0.4,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut',
+    delay: i * 0.2,
+  });
+});
+
+/* ── CINEMATIC ZOOM SECTION ─────────────────────────── */
+gsap.to('.zoom-img', {
+  scale: 1.6,
+  filter: 'brightness(0.7) saturate(0.9)',
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.zoom-section',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.5,
+  }
+});
+
+gsap.fromTo('.zoom-tagline',
+  { opacity: 0, scale: 0.85 },
+  {
+    opacity: 1, scale: 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.zoom-section',
+      start: 'top 80%',
+      end: 'top 20%',
+      scrub: 1,
+    }
+  }
+);
+
+gsap.to('.zoom-tagline', {
+  opacity: 0, scale: 1.1,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.zoom-section',
+    start: '70% bottom',
+    end: 'bottom top',
+    scrub: 1,
+  }
+});
+
+gsap.fromTo('.zoom-sub',
+  { opacity: 0, y: 20 },
+  {
+    opacity: 1, y: 0,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.zoom-section',
+      start: '20% top',
+      end: '40% top',
+      scrub: 1,
+    }
+  }
+);
+
+/* ── SERVICES HORIZONTAL SCROLL ─────────────────────── */
+const servicesTrack = document.getElementById('servicesTrack');
+const serviceCards  = servicesTrack.querySelectorAll('.service-card');
+const trackWidth    = servicesTrack.scrollWidth - window.innerWidth + 80;
+
+gsap.to(servicesTrack, {
+  x: -trackWidth,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.services-section',
+    start: 'top top',
+    end: () => '+=' + (trackWidth + window.innerHeight),
+    pin: true,
+    scrub: 1.2,
+    anticipatePin: 1,
+  }
+});
+
+/* ── PARALLAX PANEL BG ──────────────────────────────── */
 gsap.to('.reveal-bg', {
-  y: '25%', ease: 'none',
-  scrollTrigger: { trigger: '.reveal-panel', start: 'top bottom', end: 'bottom top', scrub: true }
+  y: '25%',
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.reveal-panel',
+    start: 'top bottom',
+    end: 'bottom top',
+    scrub: true,
+  }
 });
 
-/* Generic scroll reveals */
+/* ── GENERIC SCROLL REVEALS ─────────────────────────── */
 document.querySelectorAll('.reveal-up').forEach(el => {
-  gsap.fromTo(el, { opacity: 0, y: 50 }, {
-    opacity: 1, y: 0, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
-  });
+  gsap.fromTo(el,
+    { opacity: 0, y: 50 },
+    {
+      opacity: 1, y: 0,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none',
+      }
+    }
+  );
 });
+
 document.querySelectorAll('.reveal-left').forEach(el => {
-  gsap.fromTo(el, { opacity: 0, x: -50 }, {
-    opacity: 1, x: 0, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
-  });
+  gsap.fromTo(el,
+    { opacity: 0, x: -50 },
+    {
+      opacity: 1, x: 0,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none',
+      }
+    }
+  );
 });
 
-/* Process stagger */
-gsap.fromTo('.process-step', { opacity: 0, y: 40 }, {
-  opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
-  scrollTrigger: { trigger: '.process-grid', start: 'top 80%', toggleActions: 'play none none none' }
-});
+/* ── PROCESS STEPS STAGGER ──────────────────────────── */
+gsap.fromTo('.process-step',
+  { opacity: 0, y: 40 },
+  {
+    opacity: 1, y: 0,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.process-grid',
+      start: 'top 80%',
+      toggleActions: 'play none none none',
+    }
+  }
+);
 
-/* Testimonials stagger */
-gsap.fromTo('.testimonial-card', { opacity: 0, y: 40 }, {
-  opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
-  scrollTrigger: { trigger: '.testimonials-grid', start: 'top 80%', toggleActions: 'play none none none' }
-});
+/* ── TESTIMONIALS STAGGER ───────────────────────────── */
+gsap.fromTo('.testimonial-card',
+  { opacity: 0, y: 40 },
+  {
+    opacity: 1, y: 0,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.testimonials-grid',
+      start: 'top 80%',
+      toggleActions: 'play none none none',
+    }
+  }
+);
 
-/* Gallery cells */
-gsap.fromTo('.gallery-cell', { opacity: 0, scale: 0.96 }, {
-  opacity: 1, scale: 1, duration: 0.9, stagger: 0.08, ease: 'power3.out',
-  scrollTrigger: { trigger: '.gallery-section', start: 'top 80%', toggleActions: 'play none none none' }
-});
+/* ── GALLERY CELLS ──────────────────────────────────── */
+gsap.fromTo('.gallery-cell',
+  { opacity: 0, scale: 0.96 },
+  {
+    opacity: 1, scale: 1,
+    duration: 0.9,
+    stagger: 0.08,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.gallery-section',
+      start: 'top 80%',
+      toggleActions: 'play none none none',
+    }
+  }
+);
 
-/* Nav hide/show */
+/* ── NAV HIDE ON SCROLL DOWN ────────────────────────── */
 let lastScroll = 0;
-const nav = document.getElementById('mainNav');
+const nav = document.querySelector('nav');
 lenis.on('scroll', ({ scroll }) => {
   if (scroll > lastScroll && scroll > 100) {
     nav.style.transform = 'translateY(-100%)';
+    nav.style.transition = 'transform 0.4s ease';
   } else {
     nav.style.transform = 'translateY(0)';
   }
   lastScroll = scroll;
 });
 
-/* Reduce motion */
+/* ── REDUCE MOTION SUPPORT ──────────────────────────── */
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   lenis.destroy();
   ScrollTrigger.getAll().forEach(st => st.kill());
   gsap.globalTimeline.clear();
   document.querySelectorAll('.reveal-up, .reveal-left').forEach(el => {
-    el.style.opacity = '1'; el.style.transform = 'none';
+    el.style.opacity = '1';
+    el.style.transform = 'none';
   });
 }
 </script>

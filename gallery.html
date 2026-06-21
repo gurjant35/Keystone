@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery | Toronto Premium Glass</title>
+<meta name="description" content="Browse our portfolio of custom glass installations across the GTA — showers, railings, mirrors, closet doors and office partitions.">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --obsidian:   #080A0C;
+  --obsidian-2: #0E1215;
+  --obsidian-3: #141A20;
+  --bone:       #E8E4DC;
+  --bone-dim:   #9E9A93;
+  --ice:        #A8C8D8;
+  --ice-bright: #C8E4F0;
+  --chrome:     #D0D8E0;
+  --chrome-dim: #6A7A88;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body:    'Inter', sans-serif;
+  --font-stamp:   'Bebas Neue', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--obsidian);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9500; opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat; background-size: 300px 300px;
+}
+
+/* Cursor */
+.cursor { position: fixed; width: 8px; height: 8px; background: var(--ice-bright); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s; mix-blend-mode: screen; }
+.cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(168,200,216,0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.4s, height 0.4s, border-color 0.3s; }
+
+/* Nav */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; transition: transform 0.4s ease; }
+nav::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(8,10,12,0.95) 0%, transparent 100%); pointer-events: none; }
+.nav-logo { font-family: var(--font-display); font-size: 18px; font-weight: 400; letter-spacing: 0.12em; color: var(--bone); text-transform: uppercase; position: relative; z-index: 1; text-decoration: none; }
+.nav-logo span { color: var(--ice); }
+.nav-links { display: flex; gap: 40px; list-style: none; position: relative; z-index: 1; }
+.nav-links a { font-family: var(--font-body); font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bone-dim); text-decoration: none; transition: color 0.3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--ice-bright); }
+.nav-cta { position: relative; z-index: 1; font-family: var(--font-body); font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--obsidian); background: var(--ice-bright); border: none; padding: 12px 28px; cursor: pointer; text-decoration: none; transition: background 0.3s; }
+.nav-cta:hover { background: var(--bone); }
+
+/* Section label */
+section { position: relative; }
+.section-label { font-family: var(--font-body); font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ice); display: flex; align-items: center; gap: 16px; }
+.section-label::before { content: ''; display: block; width: 32px; height: 1px; background: var(--ice); }
+
+/* Buttons */
+.btn-primary { font-family: var(--font-body); font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--obsidian); background: var(--bone); border: none; padding: 18px 40px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.3s; }
+.btn-primary:hover { background: var(--ice-bright); }
+
+/* Page hero */
+.page-hero {
+  height: 72vh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 80px 80px;
+  overflow: hidden;
+}
+.page-hero-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.3) saturate(0.5);
+  z-index: 0; transform: scale(1.06);
+  will-change: transform;
+}
+.page-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(8,10,12,0.97) 0%, rgba(8,10,12,0.2) 60%, transparent 100%);
+  z-index: 1;
+}
+.glass-lines { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.glass-line { position: absolute; width: 1px; background: linear-gradient(to bottom, transparent 0%, rgba(168,200,216,0.1) 30%, rgba(200,228,240,0.25) 50%, rgba(168,200,216,0.1) 70%, transparent 100%); height: 100%; top: 0; }
+.page-hero-content { position: relative; z-index: 3; max-width: 800px; }
+.page-hero-eyebrow { font-family: var(--font-body); font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ice); margin-bottom: 20px; opacity: 0; transform: translateY(20px); }
+.page-hero-title { font-family: var(--font-display); font-size: clamp(52px, 7vw, 96px); font-weight: 300; line-height: 0.94; letter-spacing: -0.01em; opacity: 0; transform: translateY(40px); }
+.page-hero-title em { font-style: italic; color: var(--ice-bright); }
+
+/* Filter bar */
+.filter-bar {
+  padding: 48px 80px;
+  background: var(--obsidian-2);
+  border-bottom: 1px solid rgba(168,200,216,0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  background: transparent;
+  border: 1px solid rgba(168,200,216,0.15);
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+.filter-btn:hover { color: var(--bone); border-color: rgba(168,200,216,0.4); }
+.filter-btn.active {
+  color: var(--obsidian);
+  background: var(--ice-bright);
+  border-color: var(--ice-bright);
+}
+.filter-count {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+}
+
+/* Gallery masonry grid */
+.gallery-grid {
+  padding: 40px 80px 120px;
+  columns: 4;
+  column-gap: 16px;
+  background: var(--obsidian);
+}
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+}
+.gallery-item img {
+  width: 100%;
+  display: block;
+  filter: brightness(0.7) saturate(0.75);
+  transform: scale(1.03);
+  transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
+  will-change: transform;
+}
+.gallery-item:hover img {
+  transform: scale(1.09);
+  filter: brightness(0.9) saturate(1);
+}
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8,10,12,0.8) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+.gallery-item-label {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--bone);
+}
+.gallery-item.hidden {
+  display: none;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(8,10,12,0.97);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  backdrop-filter: blur(8px);
+}
+.lightbox.active { opacity: 1; pointer-events: all; }
+.lightbox-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lightbox-img {
+  max-width: 100%;
+  max-height: 82vh;
+  object-fit: contain;
+  filter: brightness(0.95);
+  transform: scale(0.94);
+  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.lightbox.active .lightbox-img { transform: scale(1); }
+.lightbox-caption {
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--bone-dim);
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+.lightbox-close {
+  position: fixed;
+  top: 32px; right: 40px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  background: transparent;
+  border: 1px solid rgba(168,200,216,0.2);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+}
+.lightbox-close:hover { color: var(--bone); border-color: rgba(168,200,216,0.5); }
+.lightbox-nav {
+  position: fixed;
+  top: 50%; transform: translateY(-50%);
+  background: transparent;
+  border: 1px solid rgba(168,200,216,0.15);
+  color: var(--bone-dim);
+  font-size: 20px;
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+.lightbox-nav:hover { color: var(--bone); border-color: rgba(168,200,216,0.5); background: rgba(168,200,216,0.08); }
+.lightbox-prev { left: 24px; }
+.lightbox-next { right: 24px; }
+
+/* CTA section */
+.gallery-cta {
+  padding: 120px 80px;
+  background: var(--obsidian-2);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  border-top: 1px solid rgba(168,200,216,0.08);
+}
+.gallery-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.gallery-cta h2 em { font-style: italic; color: var(--ice-bright); }
+.gallery-cta p {
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 300; line-height: 1.9;
+  color: var(--bone-dim); margin-bottom: 40px;
+}
+
+/* Footer */
+footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0.08); padding: 80px 80px 40px; }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 64px; }
+.footer-logo { font-family: var(--font-display); font-size: 24px; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone); text-decoration: none; display: block; }
+.footer-logo span { color: var(--ice); }
+.footer-tagline { font-family: var(--font-body); font-size: 11px; color: var(--chrome-dim); letter-spacing: 0.1em; margin-top: 8px; }
+.footer-nav { display: flex; gap: 80px; }
+.footer-nav-col h4 { font-family: var(--font-body); font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ice); margin-bottom: 24px; }
+.footer-nav-col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.footer-nav-col a { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--bone-dim); text-decoration: none; transition: color 0.3s; }
+.footer-nav-col a:hover { color: var(--bone); }
+.footer-bottom { border-top: 1px solid rgba(168,200,216,0.06); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-family: var(--font-body); font-size: 11px; color: var(--chrome-dim); letter-spacing: 0.05em; }
+.footer-badge { font-family: var(--font-stamp); font-size: 9px; letter-spacing: 0.3em; color: var(--chrome-dim); }
+
+.reveal-up { opacity: 0; transform: translateY(40px); }
+
+@media (max-width: 1100px) { .gallery-grid { columns: 3; } }
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  .nav-links, .nav-cta { display: none; }
+  .page-hero { padding: 0 24px 48px; height: 56vh; }
+  .filter-bar { padding: 32px 24px; gap: 6px; }
+  .gallery-grid { columns: 2; padding: 24px 24px 80px; }
+  .gallery-cta { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+  footer { padding: 48px 24px 28px; }
+  .footer-top { flex-direction: column; gap: 48px; }
+  .footer-nav { gap: 40px; flex-wrap: wrap; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .lightbox-nav { display: none; }
+}
+@media (max-width: 480px) { .gallery-grid { columns: 1; } }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox-close" id="lightboxClose">Close ✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+  <div class="lightbox-inner">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="nav-logo" href="index.html">Toronto <span>Premium</span> Glass</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="contact.html">Get a Quote</a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <img class="page-hero-bg" src="images/gal-full-06.jpg" alt="Toronto Premium Glass gallery">
+  <div class="page-hero-overlay"></div>
+  <div class="glass-lines">
+    <div class="glass-line" style="left:22%"></div>
+    <div class="glass-line" style="left:50%"></div>
+    <div class="glass-line" style="left:76%"></div>
+  </div>
+  <div class="page-hero-content">
+    <div class="page-hero-eyebrow">Our Work · 500+ Completed Projects</div>
+    <h1 class="page-hero-title">Glass that<br>speaks for<br><em>itself</em></h1>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" id="filterBar">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="showers">Showers</button>
+  <button class="filter-btn" data-filter="railings">Railings</button>
+  <button class="filter-btn" data-filter="mirrors">Mirrors</button>
+  <button class="filter-btn" data-filter="closets">Closets</button>
+  <button class="filter-btn" data-filter="partitions">Partitions</button>
+  <span class="filter-count" id="filterCount">26 Photos</span>
+</div>
+
+<!-- GALLERY GRID -->
+<div class="gallery-grid" id="galleryGrid">
+
+  <!-- Showers -->
+  <div class="gallery-item" data-category="showers" data-label="Frameless Shower Enclosure">
+    <img src="images/gallery-1-frameless-shower.jpg" alt="Frameless shower enclosure" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Shower Enclosure</span></div>
+  </div>
+  <div class="gallery-item" data-category="showers" data-label="Custom Shower — GTA">
+    <img src="images/gal-full-01.jpg" alt="Custom shower" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Custom Shower</span></div>
+  </div>
+  <div class="gallery-item" data-category="showers" data-label="Spa Shower Enclosure">
+    <img src="images/gal-full-02.jpg" alt="Spa shower" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Spa Shower</span></div>
+  </div>
+  <div class="gallery-item" data-category="showers" data-label="Neo-Angle Shower">
+    <img src="images/gal-full-03.jpg" alt="Neo-angle shower" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Neo-Angle Shower</span></div>
+  </div>
+  <div class="gallery-item" data-category="showers" data-label="Walk-In Shower">
+    <img src="images/gal-full-04.jpg" alt="Walk-in shower" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Walk-In Shower</span></div>
+  </div>
+
+  <!-- Railings -->
+  <div class="gallery-item" data-category="railings" data-label="Exterior Deck Railing">
+    <img src="images/Exterior_residential_deck_with_sleek_202606201540%20(1).jpeg" alt="Exterior deck railing" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Deck Railing</span></div>
+  </div>
+  <div class="gallery-item" data-category="railings" data-label="Staircase Glass Railing">
+    <img src="images/gal-full-05.jpg" alt="Staircase railing" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Staircase Railing</span></div>
+  </div>
+  <div class="gallery-item" data-category="railings" data-label="Interior Glass Railing">
+    <img src="images/gal-full-06.jpg" alt="Interior railing" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Interior Railing</span></div>
+  </div>
+  <div class="gallery-item" data-category="railings" data-label="Balcony Railing System">
+    <img src="images/gal-full-07.jpg" alt="Balcony railing" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Balcony Railing</span></div>
+  </div>
+  <div class="gallery-item" data-category="railings" data-label="Modern Glass Railing">
+    <img src="images/gal-full-08.jpg" alt="Modern railing" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Modern Railing</span></div>
+  </div>
+
+  <!-- Mirrors -->
+  <div class="gallery-item" data-category="mirrors" data-label="Vanity Mirror Wall">
+    <img src="images/gallery-2-mirror-wall.jpg" alt="Mirror wall" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Mirror Wall</span></div>
+  </div>
+  <div class="gallery-item" data-category="mirrors" data-label="Glass Backsplash Mirror">
+    <img src="images/gallery-4-glass-backsplash.jpg" alt="Glass backsplash" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Glass Backsplash</span></div>
+  </div>
+  <div class="gallery-item" data-category="mirrors" data-label="Custom Vanity Mirror">
+    <img src="images/gal-full-09.jpg" alt="Vanity mirror" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Vanity Mirror</span></div>
+  </div>
+  <div class="gallery-item" data-category="mirrors" data-label="Gym Mirror Wall">
+    <img src="images/gal-full-10.jpg" alt="Gym mirror" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Gym Mirror</span></div>
+  </div>
+  <div class="gallery-item" data-category="mirrors" data-label="Decorative Mirror Installation">
+    <img src="images/gal-full-11.jpg" alt="Decorative mirror" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Decorative Mirror</span></div>
+  </div>
+  <div class="gallery-item" data-category="mirrors" data-label="Beveled Mirror">
+    <img src="images/gal-full-12.jpg" alt="Beveled mirror" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Beveled Mirror</span></div>
+  </div>
+
+  <!-- Closets -->
+  <div class="gallery-item" data-category="closets" data-label="Mirror Closet Doors">
+    <img src="images/gallery-3-mirror-closet-doors.jpg" alt="Mirror closet doors" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Mirror Closet</span></div>
+  </div>
+  <div class="gallery-item" data-category="closets" data-label="Glass Panel Doors">
+    <img src="images/gallery-5-panel-doors.jpg" alt="Panel doors" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Panel Doors</span></div>
+  </div>
+  <div class="gallery-item" data-category="closets" data-label="Sliding Glass Closet">
+    <img src="images/gal-full-13.jpg" alt="Sliding closet" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Sliding Closet</span></div>
+  </div>
+  <div class="gallery-item" data-category="closets" data-label="Barn Door System">
+    <img src="images/gal-full-14.jpg" alt="Barn door" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Barn Door</span></div>
+  </div>
+  <div class="gallery-item" data-category="closets" data-label="Bifold Mirror Door">
+    <img src="images/gal-full-15.jpg" alt="Bifold door" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Bifold Door</span></div>
+  </div>
+  <div class="gallery-item" data-category="closets" data-label="Walk-In Closet Glass">
+    <img src="images/gal-full-16.jpg" alt="Walk-in closet" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Walk-In Closet</span></div>
+  </div>
+
+  <!-- Partitions -->
+  <div class="gallery-item" data-category="partitions" data-label="Aluminum Glass Divider">
+    <img src="images/gallery-6-aluminum-divider.jpg" alt="Aluminum divider" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Aluminum Divider</span></div>
+  </div>
+  <div class="gallery-item" data-category="partitions" data-label="Office Glass Partition">
+    <img src="images/gal-full-17.jpg" alt="Office partition" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Office Partition</span></div>
+  </div>
+  <div class="gallery-item" data-category="partitions" data-label="Commercial Glass Wall">
+    <img src="images/gal-full-18.jpg" alt="Commercial glass wall" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Glass Wall</span></div>
+  </div>
+  <div class="gallery-item" data-category="partitions" data-label="Floor-to-Ceiling Partition">
+    <img src="images/gal-full-19.jpg" alt="Floor-to-ceiling" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Floor-to-Ceiling</span></div>
+  </div>
+  <div class="gallery-item" data-category="partitions" data-label="Retail Glass Partition">
+    <img src="images/gal-full-20.jpg" alt="Retail partition" loading="lazy">
+    <div class="gallery-item-overlay"><span class="gallery-item-label">Retail Partition</span></div>
+  </div>
+
+</div>
+
+<!-- GALLERY CTA -->
+<section class="gallery-cta">
+  <div>
+    <div class="section-label" style="margin-bottom:28px">Start Your Project</div>
+    <h2 class="reveal-up">See your space<br>transformed<br>in <em>glass?</em></h2>
+  </div>
+  <div>
+    <p class="reveal-up">Every project in this gallery started with a phone call. Tell us your space, your vision, and your timeline — we'll handle everything from measurement to installation.</p>
+    <a class="btn-primary reveal-up" href="contact.html">Request a Free Consultation</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a class="footer-logo" href="index.html">Toronto <span>Premium</span> Glass</a>
+      <div class="footer-tagline">Crafted in Light · Installed with Precision</div>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-nav-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html#showers">Shower Enclosures</a></li>
+          <li><a href="services.html#railings">Glass Railings</a></li>
+          <li><a href="services.html#mirrors">Vanity Mirrors</a></li>
+          <li><a href="services.html#closets">Closet Doors</a></li>
+          <li><a href="services.html#partitions">Office Partitions</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#process">Our Process</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <h4>Service Areas</h4>
+        <ul>
+          <li><a href="contact.html">Toronto</a></li>
+          <li><a href="contact.html">Mississauga</a></li>
+          <li><a href="contact.html">Brampton</a></li>
+          <li><a href="contact.html">Vaughan</a></li>
+          <li><a href="contact.html">Markham</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Toronto Premium Glass. All rights reserved.</div>
+    <div class="footer-badge">Custom Glass · GTA · Premium Glazing</div>
+  </div>
+</footer>
+
+<script>
+/* Lenis */
+const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+function rafLenis(t) { lenis.raf(t); requestAnimationFrame(rafLenis); }
+requestAnimationFrame(rafLenis);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => { lenis.raf(t * 1000); });
+gsap.ticker.lagSmoothing(0);
+
+/* Cursor */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
+});
+(function animateRing() {
+  ringX += (mouseX - ringX) * 0.1; ringY += (mouseY - ringY) * 0.1;
+  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+})();
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='56px'; ring.style.height='56px'; });
+  el.addEventListener('mouseleave', () => { cursor.style.width='8px'; cursor.style.height='8px'; ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* Hero entrance */
+gsap.to('.page-hero-eyebrow', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.4 });
+gsap.to('.page-hero-title',   { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', delay: 0.7 });
+gsap.to('.page-hero-bg', { y: '18%', ease: 'none', scrollTrigger: { trigger: '.page-hero', start: 'top top', end: 'bottom top', scrub: true } });
+document.querySelectorAll('.glass-line').forEach((line, i) => {
+  gsap.to(line, { opacity: i % 2 === 0 ? 0.6 : 0.3, duration: 2.5, repeat: -1, yoyo: true, delay: i * 0.4, ease: 'sine.inOut' });
+});
+
+/* Gallery reveal — staggered on scroll */
+const allItems = document.querySelectorAll('.gallery-item');
+allItems.forEach((item, i) => {
+  gsap.fromTo(item, { opacity: 0, y: 32 }, {
+    opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: item, start: 'top 92%', toggleActions: 'play none none none' },
+    delay: (i % 4) * 0.08
+  });
+});
+
+/* Scroll reveals */
+document.querySelectorAll('.reveal-up').forEach(el => {
+  gsap.fromTo(el, { opacity: 0, y: 50 }, {
+    opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+  });
+});
+
+/* ── FILTER LOGIC ── */
+const filterBtns  = document.querySelectorAll('.filter-btn');
+const galleryItems = document.querySelectorAll('.gallery-item');
+const filterCount  = document.getElementById('filterCount');
+
+function updateCount(filter) {
+  let count = 0;
+  galleryItems.forEach(item => {
+    if (filter === 'all' || item.dataset.category === filter) count++;
+  });
+  filterCount.textContent = count + ' Photo' + (count !== 1 ? 's' : '');
+}
+updateCount('all');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    updateCount(filter);
+    galleryItems.forEach(item => {
+      if (filter === 'all' || item.dataset.category === filter) {
+        item.classList.remove('hidden');
+        gsap.fromTo(item, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' });
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+    ScrollTrigger.refresh();
+  });
+});
+
+/* ── LIGHTBOX LOGIC ── */
+const lightbox     = document.getElementById('lightbox');
+const lightboxImg  = document.getElementById('lightboxImg');
+const lightboxCap  = document.getElementById('lightboxCaption');
+const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+
+let visibleItems = [];
+let currentIndex = 0;
+
+function openLightbox(item) {
+  visibleItems = [...document.querySelectorAll('.gallery-item:not(.hidden)')];
+  currentIndex = visibleItems.indexOf(item);
+  showImage(currentIndex);
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  lenis.stop();
+}
+
+function showImage(idx) {
+  const item  = visibleItems[idx];
+  const img   = item.querySelector('img');
+  const label = item.dataset.label || '';
+  lightboxImg.src = img.src;
+  lightboxImg.alt = img.alt;
+  lightboxCap.textContent = label;
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+  lenis.start();
+}
+
+galleryItems.forEach(item => {
+  item.addEventListener('click', () => openLightbox(item));
+});
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+lightboxPrev.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+  showImage(currentIndex);
+});
+lightboxNext.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % visibleItems.length;
+  showImage(currentIndex);
+});
+
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length; showImage(currentIndex); }
+  if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % visibleItems.length; showImage(currentIndex); }
+});
+
+/* Nav hide/show */
+let lastScroll = 0;
+const nav = document.getElementById('mainNav');
+lenis.on('scroll', ({ scroll }) => {
+  nav.style.transform = (scroll > lastScroll && scroll > 100) ? 'translateY(-100%)' : 'translateY(0)';
+  lastScroll = scroll;
+});
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  lenis.destroy(); ScrollTrigger.getAll().forEach(st => st.kill()); gsap.globalTimeline.clear();
+  document.querySelectorAll('.gallery-item,.reveal-up,.page-hero-eyebrow,.page-hero-title').forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
+}
+</script>
+</body>
+</html>
