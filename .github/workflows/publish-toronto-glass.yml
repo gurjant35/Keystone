@@ -51,14 +51,14 @@ jobs:
           }
           if ((data.result_info?.total_pages || 1) > 1) throw new Error('Project list is paginated; manual project verification is required.');
           const matching = data.result.filter(project => (project.domains || []).some(domain =>
-            domain.toLowerCase().replace(/\\.$/, '') === 'torontopremiumglass.com'));
+            domain.toLowerCase().replace(/\.$/, '') === 'torontopremiumglass.com'));
           if (matching.length !== 1) {
             throw new Error('Expected exactly one existing Pages project with torontopremiumglass.com attached. No hosting changes were made.');
           }
           const project = matching[0];
           if (!/^[a-z0-9][a-z0-9-]{0,99}$/i.test(project.name) || !project.production_branch ||
-              /[\\r\\n]/.test(project.production_branch)) throw new Error('Project metadata requires manual verification.');
-          appendFileSync(process.env.GITHUB_OUTPUT, 'name=' + project.name + '\\nbranch=' + project.production_branch + '\\n');
+              /[\r\n]/.test(project.production_branch)) throw new Error('Project metadata requires manual verification.');
+          appendFileSync(process.env.GITHUB_OUTPUT, 'name=' + project.name + '\nbranch=' + project.production_branch + '\n');
           console.log('Verified target: ' + project.name + ' / torontopremiumglass.com');
           JS
       - name: Prepare the tested static website
