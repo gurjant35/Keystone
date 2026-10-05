@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "@remotion/player": "^4.0.530",
+    "esbuild": "^0.28.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.530",
+    "vite": "^8.3.2"
+  },
+  "name": "toronto-premium-glass-web",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build:motion": "esbuild motion/GlassShowcase.tsx --bundle --minify --format=iife --platform=browser --target=es2020 --define:process.env.NODE_ENV=\"\\\"production\\\"\" --outfile=assets/glass-motion.js"
+  }
+}

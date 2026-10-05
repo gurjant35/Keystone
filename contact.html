@@ -6,12 +6,12 @@
 <title>Contact | Toronto Premium Glass</title>
 <meta name="description" content="Request a free quote from Toronto Premium Glass. Serving Toronto, Mississauga, Brampton, Vaughan, Markham and all GTA municipalities.">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+
 
 <style>
 :root {
@@ -443,6 +443,8 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
 }
 </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/apple.css?v=20261005">
 </head>
 <body>
 
@@ -452,7 +454,7 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
 <!-- NAV -->
 <nav id="mainNav">
   <a class="nav-logo" href="index.html">Toronto <span>Premium</span> Glass</a>
-  <ul class="nav-links">
+  <button class="nav-menu-button" type="button" aria-expanded="false" aria-controls="mainLinks">Menu</button><ul class="nav-links" id="mainLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="gallery.html">Gallery</a></li>
@@ -492,26 +494,26 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
       <h2>Tell us about<br>your <em>project</em></h2>
     </div>
 
-    <form class="contact-form" id="contactForm" novalidate>
+    <form class="contact-form" id="contactForm" data-quote-form data-status="quoteStatus" data-fallback="quoteFallback" action="https://formsubmit.co/info@torontopremiumglass.com" method="POST"><input type="hidden" name="_subject" value="New glass quote — Toronto Premium Glass"><input type="hidden" name="_template" value="table"><input type="hidden" name="_next" value="https://torontopremiumglass.com/contact?quote=submitted"><input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
       <div class="form-row">
         <div class="form-field">
           <label for="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" placeholder="Jane" required>
+          <input type="text" id="firstName" name="firstName" autocomplete="given-name" maxlength="100" placeholder="Jane" required>
         </div>
         <div class="form-field">
           <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" placeholder="Smith">
+          <input type="text" id="lastName" name="lastName" autocomplete="family-name" maxlength="100" placeholder="Smith">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-field">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="(416) 000-0000" required>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="25" placeholder="Your phone number" required>
         </div>
         <div class="form-field">
           <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" placeholder="jane@email.com">
+          <input type="email" id="email" name="email" autocomplete="email" maxlength="254" placeholder="jane@email.com">
         </div>
       </div>
 
@@ -534,14 +536,14 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
       <div class="form-row">
         <div class="form-field full">
           <label for="city">City / Municipality</label>
-          <input type="text" id="city" name="city" placeholder="Toronto, Mississauga, Vaughan…">
+          <input type="text" id="city" name="city" autocomplete="address-level2" maxlength="100" placeholder="Toronto, Mississauga, Vaughan…">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-field full">
           <label for="message">Project Details</label>
-          <textarea id="message" name="message" placeholder="Tell us about your space, what you're looking for, and any timeline requirements…"></textarea>
+          <textarea id="message" name="message" maxlength="4000" placeholder="Tell us about your space, what you're looking for, and any timeline requirements…"></textarea>
         </div>
       </div>
 
@@ -549,10 +551,10 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
         <button type="submit" class="form-submit-btn">Send Request</button>
         <span class="form-note">We respond within 1 business day.</span>
       </div>
-    </form>
+    </form><p class="quote-status" id="quoteStatus" role="status" aria-live="polite"></p><div class="quote-actions" id="quoteFallback" hidden><a data-sms="+16473255635" href="sms:+16473255635">Text 647-325-5635</a><a data-sms="+16476424080" href="sms:+16476424080">Text 647-642-4080</a><a data-email href="mailto:info@torontopremiumglass.com">Email your request</a></div>
 
     <div class="form-success" id="formSuccess">
-      <p>Thank you — we'll be in touch soon.</p>
+      <p>Thank you for your request.</p>
       <span>Expect a call or email within one business day. We look forward to working with you.</span>
     </div>
   </div>
@@ -561,7 +563,7 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
   <div class="contact-info-wrap reveal-up">
     <div class="info-block">
       <div class="info-block-label">Phone &amp; Text</div>
-      <a class="info-value" href="tel:+14161234567">(416) 123-4567</a>
+      <div class="info-value"><div class="phone-group"><div class="phone-line"><a href="tel:+16473255635">+1 (647) 325-5635</a><a class="text-link" href="sms:+16473255635">Text</a></div><div class="phone-line"><a href="tel:+16476424080">+1 (647) 642-4080</a><a class="text-link" href="sms:+16476424080">Text</a></div></div></div>
       <p class="info-sub">Call or text anytime — we respond fast.<br>Available Mon–Sat, 7am–7pm</p>
     </div>
 
@@ -588,20 +590,6 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
   </div>
 
 </section>
-
-<!-- GOOGLE MAPS EMBED PLACEHOLDER -->
-<!--
-  EMBED YOUR GOOGLE MAP HERE:
-  Replace the div below with your Google Maps embed <iframe>
-  You can generate one at: maps.google.com → Share → Embed a map
-  Then remove the class="map-placeholder-text" div
--->
-<div class="map-section">
-  <div class="map-placeholder-text">
-    <p>Greater Toronto Area</p>
-    <span>Google Maps embed — add your embed code here</span>
-  </div>
-</div>
 
 <!-- SERVICE AREAS GRID -->
 <section class="areas-section">
@@ -657,7 +645,7 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
 </section>
 
 <!-- FOOTER -->
-<footer>
+<footer><div class="footer-contacts"><a href="tel:+16473255635">+1 (647) 325-5635</a><a href="tel:+16476424080">+1 (647) 642-4080</a><a href="mailto:info@torontopremiumglass.com">info@torontopremiumglass.com</a></div>
   <div class="footer-top">
     <div>
       <a class="footer-logo" href="index.html">Toronto <span>Premium</span> Glass</a>
@@ -696,114 +684,12 @@ footer { background: var(--obsidian-3); border-top: 1px solid rgba(168,200,216,0
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Toronto Premium Glass. All rights reserved.</div>
+    <div class="footer-copy">© 2026 Toronto Premium Glass. All rights reserved.</div>
     <div class="footer-badge">Custom Glass · GTA · Premium Glazing</div>
   </div>
 </footer>
 
-<script>
-/* Lenis */
-const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-function rafLenis(t) { lenis.raf(t); requestAnimationFrame(rafLenis); }
-requestAnimationFrame(rafLenis);
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(t => { lenis.raf(t * 1000); });
-gsap.ticker.lagSmoothing(0);
 
-/* Cursor */
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursorRing');
-let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
-});
-(function animateRing() {
-  ringX += (mouseX - ringX) * 0.1; ringY += (mouseY - ringY) * 0.1;
-  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
-  requestAnimationFrame(animateRing);
-})();
-document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='56px'; ring.style.height='56px'; });
-  el.addEventListener('mouseleave', () => { cursor.style.width='8px'; cursor.style.height='8px'; ring.style.width='36px'; ring.style.height='36px'; });
-});
-
-gsap.registerPlugin(ScrollTrigger);
-
-/* Hero entrance */
-const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-tl.to('.contact-hero-eyebrow', { opacity: 1, y: 0, duration: 1 }, 0.4);
-tl.to('.contact-hero-title',   { opacity: 1, y: 0, duration: 1.3, ease: 'power4.out' }, 0.7);
-tl.to('.contact-hero-scroll',  { opacity: 1, duration: 0.8 }, 1.4);
-
-/* Hero parallax */
-gsap.to('.contact-hero-bg', { y: '20%', ease: 'none', scrollTrigger: { trigger: '.contact-hero', start: 'top top', end: 'bottom top', scrub: true } });
-
-/* Glass lines */
-document.querySelectorAll('.glass-line').forEach((line, i) => {
-  gsap.to(line, { opacity: i % 2 === 0 ? 0.6 : 0.3, duration: 2.5, repeat: -1, yoyo: true, delay: i * 0.4, ease: 'sine.inOut' });
-});
-
-/* Scroll reveals */
-document.querySelectorAll('.reveal-up').forEach(el => {
-  gsap.fromTo(el, { opacity: 0, y: 50 }, {
-    opacity: 1, y: 0, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
-  });
-});
-document.querySelectorAll('.reveal-left').forEach(el => {
-  gsap.fromTo(el, { opacity: 0, x: -50 }, {
-    opacity: 1, x: 0, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
-  });
-});
-
-/* Area cells stagger */
-gsap.fromTo('.area-cell', { opacity: 0, y: 30 }, {
-  opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-  scrollTrigger: { trigger: '.areas-grid', start: 'top 80%', toggleActions: 'play none none none' }
-});
-
-/* Nav hide/show */
-let lastScroll = 0;
-const nav = document.getElementById('mainNav');
-lenis.on('scroll', ({ scroll }) => {
-  nav.style.transform = (scroll > lastScroll && scroll > 100) ? 'translateY(-100%)' : 'translateY(0)';
-  lastScroll = scroll;
-});
-
-/* Form submission */
-const form = document.getElementById('contactForm');
-const successMsg = document.getElementById('formSuccess');
-
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  const phone = form.querySelector('#phone').value.trim();
-  const firstName = form.querySelector('#firstName').value.trim();
-  const service = form.querySelector('#service').value;
-
-  if (!firstName || !phone || !service) {
-    const emptyFields = [];
-    if (!firstName) emptyFields.push('First Name');
-    if (!phone) emptyFields.push('Phone Number');
-    if (!service) emptyFields.push('Service Required');
-    alert('Please fill in: ' + emptyFields.join(', '));
-    return;
-  }
-
-  /* Show success state */
-  form.style.opacity = '0.3';
-  form.style.pointerEvents = 'none';
-  form.style.transition = 'opacity 0.4s';
-  successMsg.classList.add('visible');
-  gsap.fromTo(successMsg, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-});
-
-/* Reduce motion */
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  lenis.destroy(); ScrollTrigger.getAll().forEach(st => st.kill()); gsap.globalTimeline.clear();
-  document.querySelectorAll('.reveal-up,.reveal-left,.contact-hero-eyebrow,.contact-hero-title,.contact-hero-scroll').forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
-}
-</script>
+<script src="assets/site.js?v=20261005" defer></script>
 </body>
 </html>
