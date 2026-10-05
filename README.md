@@ -16,7 +16,9 @@ Automatic SMS alerts are not configured. The email fallback requested by the own
 
 ## Hosting
 
-Publish the five HTML pages plus assets/, images/, and video/ to the existing Cloudflare Pages project serving torontopremiumglass.com. The current live pages were recovered and preserved because they contained edits absent from the older repository copy. This update has not been deployed yet; Cloudflare sign-in is required to identify the existing project and upload it.
+The update was pushed to the main branch on 2026-10-05. Both connected Vercel projects, keystone and keystone-z5dv, reported successful production deployments of commit 5619f6ec42e4a28455a64e61f0f80848fea18ec4. The public custom domain torontopremiumglass.com still served the previous pages afterward; requesting assets/apple.css returned the old homepage rather than the new stylesheet. The custom domain's active hosting project remains unverified because the available Cloudflare dashboard session is blocked by a verification error. Do not treat Vercel deployment success as confirmation that the custom domain was updated.
+
+The current live pages were recovered and preserved because they contained edits absent from the older repository copy. The prepared static package contains the five HTML pages plus assets/, images/, and video/ for deployment to the existing project once it is identified.
 
 ## Development
 
